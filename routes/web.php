@@ -15,33 +15,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::group(['prefix' => 'users'], function() {
-    Route::get('user/create', 'Users\UsersController@add');
+    
+    Route::get('mypege','Users\UserController@add');
+    
+    Route::get('bbs/bbs_front', 'Users\BbsController@front');
+    
+    Route::get('bbs/bbs_list', 'Users\BbsController@add');
+    
+    Route::get('bbs/bbs_create', 'Users\BbsController@create');
+    Route::post('bbs/bbs_create', 'Users\BbsController@create');
+    
+    
+    
+    
+    Route::get('work_schedule/my_workShedule','Users\WorkScheduleController@add');
+    
+    Route::get('work_schedule/whole_workShedule','Users\WorkScheduleController@whole');
+    
+    Route::get('work_schedule/date_workShedule','Users\WorkScheduleController@date');
+    
+    Route::get('work_schedule/leave_application','Users\WorkScheduleController@leave');
 });
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
