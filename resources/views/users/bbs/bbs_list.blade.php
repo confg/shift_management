@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.users')
+@section('title', '登録済みの掲示板一覧')
 
-        <title>掲示板</title>
-    </head>
-    <body>
-        <div class="container">
-            <h1>掲示板一覧<h1>
+@section('content')
+
+    <div class="container">
+        <h1>掲示板一覧<h1>
+        <div>
+            <a href="{{ action('Users\BbsController@create') }}">新規作成</a>
         </div>
-    </body>
-</html>
+        
+    </div>
+@endsection
+    </div>
