@@ -25,12 +25,16 @@ Route::group(['prefix' => 'users'], function() {
     
     Route::get('bbs/bbs_front', 'Users\BbsController@front');
     
-    Route::get('bbs/bbs_list', 'Users\BbsController@add');
+    Route::get('bbs/bbs_list', 'Users\BbsController@index');
     
-    Route::get('bbs/bbs_create', 'Users\BbsController@create');
+    Route::get('bbs/bbs_create', 'Users\BbsController@add');
     Route::post('bbs/bbs_create', 'Users\BbsController@create');
     
+    Route::get('bbs/edit', 'Users\BbsController@edit');
+    Route::post('bbs/edit', 'Users\BbsController@update');
+
     
+    Route::get('bbs/delete', 'Users\BbsController@delete');
     
     
     Route::get('work_schedule/my_workShedule','Users\WorkScheduleController@add');

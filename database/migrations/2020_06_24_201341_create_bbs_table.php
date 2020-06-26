@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BbsCreateTable extends Migration
+class CreateBbsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class BbsCreateTable extends Migration
      */
     public function up()
     {
-        Schema::create('bbs_create', function (Blueprint $table) {
+        Schema::create('bbs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('body');
             $table->string('image_path')->nullable();
+            $table->string('edited_at');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class BbsCreateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bbs_create');
+        Schema::dropIfExists('bbs');
     }
 }

@@ -23,7 +23,7 @@
                     <a href="{{ action('Users\WorkScheduleController@whole') }}">全体の勤務表</a>
                 </div>
                 <div class="buttom-bule">
-                    <a href="{{ action('Users\BbsController@add') }}">掲示板</a>
+                    <a href="{{ action('Users\BbsController@index') }}">掲示板</a>
                 </div>
                 <div class="buttom-bule">
                     <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
