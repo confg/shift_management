@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Bbs;
+use App\BbsUser;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BbsController extends Controller
 {
@@ -38,8 +42,15 @@ class BbsController extends Controller
       unset($form['image']);
       
       
+      $bbs->posted_at = Carbon::now();
+      
+      
+      $bbs->user_id = Auth::id();
+      
+      
       $bbs->fill($form);
       $bbs->save();
+      
       
       return redirect('users/bbs/bbs_list');
       
@@ -49,12 +60,16 @@ class BbsController extends Controller
       
       $cond_title = $request->cond_title;
       if ($cond_title != '') {
-          // 検索されたら検索結果を取得する
+
           $posts = Bbs::where('title', $cond_title)->get();
       } else {
-          // それ以外はすべてのニュースを取得する
+          
           $posts = Bbs::all();
       }
+      
+      
+
+      
       return view('users.bbs.bbs_list', ['posts' => $posts, 'cond_title' => $cond_title]);
       
     }
@@ -71,11 +86,10 @@ class BbsController extends Controller
     
     public function update(Request $request) {
       
-      // Validationをかける
       $this->validate($request, Bbs::$rules);
-      // News Modelからデータを取得する
+
       $bbs = Bbs::find($request->id);
-      // 送信されてきたフォームデータを格納する
+
       $bbs_form = $request->all();
       if (isset($bbs_form['image'])) {
         $path = $request->file('image')->store('public/image');
@@ -86,9 +100,11 @@ class BbsController extends Controller
         unset($bbs_form['remove']);
       }
       unset($bbs_form['_token']);
-      // 該当するデータを上書きして保存する
+      
       $bbs->fill($bbs_form)->save();
-
+      
+      
+      
       return redirect('users/bbs/bbs_list');
     }
     
@@ -96,9 +112,33 @@ class BbsController extends Controller
     {
       
       $bbs = Bbs::find($request->id);
-      // 削除する
+
       $bbs->delete();
       return redirect('users/bbs/bbs_list');
     }
     
+    public function front() {
+      
+      
+      
+      return view('users/bbs/bbs_front', ['dates' => $this->getCalendarDates(2020,6), 'currentMonth' => 6]);
+    }
+    
+    public function getCalendarDates($year, $month)
+    {
+        $dateStr = sprintf('%04d-%02d-01', $year, $month);
+        $date = new Carbon($dateStr);
+        // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
+        $date->subDay($date->dayOfWeek);
+        // 同上。右下の隙間のための計算。
+        $count = 31 + $date->dayOfWeek;
+        $count = ceil($count / 7) * 7;
+        $dates = [];
+
+        for ($i = 0; $i < $count; $i++, $date->addDay()) {
+            // copyしないと全部同じオブジェクトを入れてしまうことになる
+            $dates[] = $date->copy();
+        }
+        return $dates;
+    }
  }

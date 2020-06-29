@@ -5,11 +5,8 @@
 
     <div class="container">
         <h1>掲示板一覧<h1>
-        <div>
-            <a href="{{ action('Users\BbsController@create') }}">新規作成</a>
-        </div>
-        
     </div>
+    
     <div class="container">
         <div class="row">
             <h2>ニュース一覧</h2>
@@ -43,6 +40,7 @@
                                 <th>本文</th>
                                 <th>掲載日</th>
                                 <th>掲載者</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +48,8 @@
                                 <tr>
                                     <td>{{ \Illuminate\Support\Str::limit($bbs->title, 100) }}</td>
                                     <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($bbs->edited_at, 250) }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
                                     <td>
                                         <div>
                                             <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>

@@ -18,7 +18,8 @@ class CreateBbsTable extends Migration
             $table->string('title');
             $table->string('body');
             $table->string('image_path')->nullable();
-            $table->string('edited_at');
+            $table->string('posted_at');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
