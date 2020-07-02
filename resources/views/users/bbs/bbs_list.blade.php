@@ -8,9 +8,7 @@
     </div>
     
     <div class="container">
-        <div class="row">
-            <h2>ニュース一覧</h2>
-        </div>
+        
         <div class="row">
             <div class="col-md-4">
                 <a href="{{ action('Users\BbsController@create') }}" role="button" class="btn btn-primary">新規作成</a>
@@ -45,20 +43,25 @@
                         </thead>
                         <tbody>
                             @foreach($posts as $bbs)
-                                <tr>
-                                    <td>{{ \Illuminate\Support\Str::limit($bbs->title, 100) }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
-                                    <td>
-                                        <div>
-                                            <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
-                                        </div>
-                                        <div>
-                                            <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <div class="widelink">
+                                    
+                                    <tr>
+                                        
+                                       <td><a href={{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 100) }}</a></td>
+                                       <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
+                                       <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
+                                       <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
+                                       <td>
+                                            <div>
+                                                <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
+                                            </div>
+                                            <div>
+                                                <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
+                                            </div>
+                                        </td>
+                                    </tr>  
+                                    
+                                </div>    
                             @endforeach
                         </tbody>
                     </table>
