@@ -24,19 +24,13 @@
                     </div>
                 </div>
                 <div class="content-item">
-                    <label for="affiliation">所属・部署</label>
-                    <div>
-                        
-                    </div>
-                </div>
-                <div class="content-item">
                     <label for="suggested_time">希望日付</label>
                     <div>
                         
                     </div>
                 </div>
                 <div class="radio-button">
-                    <input name="" type="radio"/>有給
+                    <input name="" type="radio" required/>有給
                     <input name="" type="radio"/>その他
                 </div>
                 <div class="">

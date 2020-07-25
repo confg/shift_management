@@ -40,11 +40,13 @@ Route::group(['prefix' => 'users'], function() {
     
     
     
-    Route::get('work_schedule/my_workShedule','Users\WorkScheduleController@add');
+    Route::get('work_schedule/my_workSchedule','Users\WorkScheduleController@add');
     
-    Route::get('work_schedule/whole_workShedule','Users\WorkScheduleController@whole');
+    Route::get('work_schedule/whole_workSchedule','Users\WorkScheduleController@whole');
     
-    Route::get('work_schedule/date_workShedule','Users\WorkScheduleController@date');
+    Route::get('work_schedule/date_workSchedule','Users\WorkScheduleController@date');
+    
+    Route::post('work_schedule/date_workSchedule','Users\WorkScheduleController@update');
     
     Route::get('work_schedule/leave_application','Users\WorkScheduleController@leave');
 });

@@ -18,21 +18,29 @@
             </tr>
         </thead>
         <tbody>
+            
             @foreach ($dates as $date)
             @if ($date->dayOfWeek == 0)
+                
                 <tr>
                 @endif
+                  
                   <td
                     @if ($date->month != $currentMonth)
                     class="bg-secondary"
                     @endif
-                  >
+                    >
+                    <a href="{{ action('Users\WorkScheduleController@date', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $date->day]) }}">
                     {{ $date->day }}
+                    </a>
                   </td>
+                  
                 @if ($date->dayOfWeek == 6)
                 </tr>
+                
             @endif
             @endforeach
+            
         </tbody>
     </table>
 </body>

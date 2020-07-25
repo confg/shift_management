@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,16 +21,23 @@
                                 <th>出勤日</th>
                                 <th>氏名</th>
                                 <th>役職</th>
-                                <th>所属・部署</th>
                                 <th>出勤時間</th>
                                 <th>退社予定時間</th>
                                 <th>残業</th>
                             </tr>
                         </thead>
                         <tbody>
+                            
                             <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 
                             </tr>
+                           
                         </tbody>
                     </table>
                 </div>
