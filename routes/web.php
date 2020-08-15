@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'users'], function() {
     
+    
     Route::get('mypege','Users\UserController@add');
     
     
@@ -40,14 +41,16 @@ Route::group(['prefix' => 'users'], function() {
     
     
     
-    Route::get('work_schedule/my_workSchedule','Users\WorkScheduleController@add');
+    Route::get('work_schedule/my_work_schedule','Users\WorkScheduleController@add');
     
-    Route::get('work_schedule/whole_workSchedule','Users\WorkScheduleController@whole');
+    Route::get('work_schedule/whole_work_schedule','Users\WorkScheduleController@whole');
     
-    Route::get('work_schedule/date_workSchedule','Users\WorkScheduleController@date');
+    Route::get('work_schedule/date_work_schedule','Users\WorkScheduleController@date');
     
-    Route::post('work_schedule/date_workSchedule','Users\WorkScheduleController@update');
+    Route::post('work_schedule/date_work_schedule','Users\WorkScheduleController@update');
     
     Route::get('work_schedule/leave_application','Users\WorkScheduleController@leave');
+    
+    Route::get('work_schedule/sample','Users\WorkScheduleController@sample');
 });
 

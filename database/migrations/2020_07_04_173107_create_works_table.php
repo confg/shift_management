@@ -15,7 +15,7 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('create_users_id');
+            $table->integer('user_id');
             $table->date('target_date');
             $table->time('time');
             $table->time('endtime');

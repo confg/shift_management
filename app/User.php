@@ -31,4 +31,9 @@ class User extends Authenticatable
         
         return $this->hasMany('App\Bbs');
     }
+    
+    public function work() {
+        
+        return $this->hasMany('App\Work');
+    }
 }

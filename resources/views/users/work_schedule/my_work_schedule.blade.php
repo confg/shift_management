@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-    <title>自分の勤務表</title>
-</head>
+@extends('layouts.work_schedule')
+
+@section('content')
+
 <body>
     <h1>自分の勤務表</h1>
+    <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -44,4 +40,4 @@
         </tbody>
     </table>
 </body>
-</html>
+@endsection

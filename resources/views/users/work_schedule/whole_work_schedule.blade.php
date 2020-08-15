@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+@extends('layouts.work_schedule')
+
+@section('content')
 <body>
     <div class="">
         <div class="">
+            <h1>{{ $date }}</h1>
             <div class="">
                 
             </div>
@@ -27,24 +23,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @foreach($uniqueday as $a)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>a</td>
+                                <td>b</td>
+                                <td>{{ $a->username }}</td>
+                                <td>d</td>
                                 <td></td>
                                 <td></td>
                                 
                             </tr>
-                           
+                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    
- 
 </body>
-</html>
+@endsection

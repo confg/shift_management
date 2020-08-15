@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>マイページ</title>
-</head>
+@extends('layouts.work_schedule')
+
+@section('content')
 <body>
     <h1>マイページ</h1>
     <div class="container">
@@ -28,7 +23,9 @@
                 <div class="buttom-bule">
                     <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
                 </div>
-                
+                <div>
+                    <a href="{{ action('Users\WorkScheduleController@sample') }}">sample</a>
+                </div>
             </div>
             
             <div class="content-right">
@@ -44,4 +41,4 @@
         </div>
     </div>
 </body>
-</html>
+@endsection

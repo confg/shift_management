@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Work;
+use App\Bbs;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -15,13 +17,50 @@ class WorkScheduleController extends Controller
     public function add() {
         date_default_timezone_set('Asia/Tokyo');
         
+        $year = date('Y');
+        $intyear = intval($year);
+        
+        $month = date('m');
+        $intmonth = intval($month);
+        
+        
     
-        return view('users.work_schedule.my_work_schedule', ['dates' => $this->getCalendarDates(2020,6), 'currentMonth' => 6, 'currentYear' => 2020]);
+        return view('users.work_schedule.my_work_schedule', ['dates' => $this->getCalendarDates($intyear,$intmonth), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
-    public function whole() {
+    //名前をとるメソッド
+    public function getUserName($user_id) {
+        $username = DB::table('users')
+        ->select('name')
+        ->where('id','=',$user_id)
+        ->first();
         
-        return view('users.work_schedule.whole_work_schedule');
+        return $username->name;
+    } 
+    
+    public function whole() {
+        date_default_timezone_set('Asia/Tokyo');
+        
+        $date = date('m/d');
+        
+        
+        
+        $uniqueday = DB::table('works')
+        ->select(DB::raw('max(id), user_id, max(updated_at)'))
+        ->whereDate('target_date', date('Y-m-d'))
+        ->groupBy('user_id')
+        ->get();
+        
+        
+        foreach($uniqueday as $a) {
+        $a->username = $this->getUserName($a->user_id);
+        }
+        var_dump($uniqueday);
+        
+        $work = Work::all();
+        
+        
+        return view('users.work_schedule.whole_work_schedule', ['date' => $date , 'work' => $work , 'uniqueday' => $uniqueday ]);
     }
     
     public function date(Request $request) {
@@ -31,15 +70,16 @@ class WorkScheduleController extends Controller
         $day = $request->input('currentDay');
         
         $date = $year.'-'.$month.'-'.$day;
-
+        
         $work = DB::table('works')
-        ->where('create_users_id', Auth::id())
+        ->where('user_id', Auth::id())
         ->whereDate('target_date', $date)
         ->first();
         
         
         
-        return view('users.work_schedule.date_work_schedule',[ 'work' => $work , 'date' => $date ]);
+        
+        return view('users.work_schedule.date_work_schedule',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
     }
     
     public function update(Request $request) {
@@ -55,11 +95,10 @@ class WorkScheduleController extends Controller
         
         
         $work->fill($form);
-        $work->create_users_id = Auth::id();
-        $work->target_date = $form['date'];
+        $work->user_id = Auth::id();
         $work->save();
         
-        return redirect('users.work_schedule.date_work_schedule');
+        return redirect('users.work_schedule.my_work_schedule');
     }
     
     public function leave() {
@@ -87,4 +126,10 @@ class WorkScheduleController extends Controller
         }
         return $dates;
     }
+    
+    public function sample(){
+        
+        return view('users.work_schedule.sample');
+    }
+    
 }

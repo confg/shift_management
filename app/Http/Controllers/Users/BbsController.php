@@ -52,7 +52,7 @@ class BbsController extends Controller
       $bbs->save();
       
       
-      return redirect('users/bbs/bbs_list');
+      return redirect('users.bbs.bbs_list');
       
     }
     
@@ -68,7 +68,6 @@ class BbsController extends Controller
       }
       
       
-
       
       return view('users.bbs.bbs_list', ['posts' => $posts, 'cond_title' => $cond_title]);
       
@@ -114,7 +113,7 @@ class BbsController extends Controller
       $bbs = Bbs::find($request->id);
 
       $bbs->delete();
-      return redirect('users/bbs/bbs_list');
+      return redirect('users.bbs.bbs_list');
     }
     
     
@@ -126,7 +125,7 @@ class BbsController extends Controller
       
       
       
-      return view('users/bbs/bbs_front', ['bbs' => $bbs]);
+      return view('users.bbs.bbs_front', ['bbs' => $bbs]);
     }
     
     

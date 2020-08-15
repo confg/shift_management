@@ -3,6 +3,20 @@
 
 @section('content')
 
+    <div class="header-buttom">
+        <a href="{{ action('Users\UserController@add') }}">マイページ</a>
+    
+        <a href="{{ action('Users\WorkScheduleController@add') }}">自分の勤務表</a>
+    
+        <a href="{{ action('Users\WorkScheduleController@whole') }}">全体の勤務表</a>
+    
+        <a href="{{ action('Users\BbsController@index') }}">掲示板</a>
+    
+        <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
+    
+        <a href="{{ action('Users\WorkScheduleController@sample') }}">sample</a>
+        
+    </div>    
     <div class="container">
         <h1>掲示板一覧<h1>
     </div>
@@ -47,7 +61,7 @@
                                     
                                     <tr>
                                         
-                                       <td><a href={{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 100) }}</a></td>
+                                       <td><a href={{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
