@@ -17,9 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::group(['prefix' => 'users'], function() {
+
+Route::get('/home', 'HomeController@home')->name('home');
+
+Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
     Route::get('mypege','Users\UserController@add');
@@ -28,10 +31,10 @@ Route::group(['prefix' => 'users'], function() {
     
     Route::get('bbs/bbs_front', 'Users\BbsController@front');
     
-    Route::get('bbs/bbs_list', 'Users\BbsController@index');
+    Route::get('bbs/index', 'Users\BbsController@index');
     
-    Route::get('bbs/bbs_create', 'Users\BbsController@add');
-    Route::post('bbs/bbs_create', 'Users\BbsController@create');
+    Route::get('bbs/create', 'Users\BbsController@add');
+    Route::post('bbs/create', 'Users\BbsController@create');
     
     Route::get('bbs/edit', 'Users\BbsController@edit');
     Route::post('bbs/edit', 'Users\BbsController@update');
@@ -41,13 +44,13 @@ Route::group(['prefix' => 'users'], function() {
     
     
     
-    Route::get('work_schedule/my_work_schedule','Users\WorkScheduleController@add');
+    Route::get('work_schedule/my','Users\WorkScheduleController@add');
     
-    Route::get('work_schedule/whole_work_schedule','Users\WorkScheduleController@whole');
+    Route::get('work_schedule/whole','Users\WorkScheduleController@whole');
     
-    Route::get('work_schedule/date_work_schedule','Users\WorkScheduleController@date');
+    Route::get('work_schedule/date','Users\WorkScheduleController@date');
     
-    Route::post('work_schedule/date_work_schedule','Users\WorkScheduleController@update');
+    Route::post('work_schedule/date','Users\WorkScheduleController@update');
     
     Route::get('work_schedule/leave_application','Users\WorkScheduleController@leave');
     

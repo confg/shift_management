@@ -25,7 +25,7 @@
         
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ action('Users\BbsController@create') }}" role="button" class="btn btn-primary">新規作成</a>
+                <a href="{{ action('Users\BbsController@add') }}" role="button" class="btn btn-primary">新規作成</a>
             </div>
             <div class="col-md-8">
                 <form action="{{ action('Users\BbsController@index') }}" method="get">
@@ -39,6 +39,10 @@
                             <input type="submit" class="btn btn-primary" value="検索">
                         </div>
                     </div>
+                    <select name="narabi">
+                        <option value="asc">昇順</option>
+                        <option value="desc">降順</option>
+                    </select>
                 </form>
             </div>
         </div>
@@ -79,6 +83,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div>
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             </div>
         </div>

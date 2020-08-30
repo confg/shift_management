@@ -17,7 +17,7 @@ class CreateWorksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->date('target_date');
-            $table->time('time');
+            $table->time('starttime');
             $table->time('endtime');
             $table->timestamps();
         });

@@ -14,7 +14,6 @@
                         <thead>
                             <tr>
                                 <th>状態</th>
-                                <th>出勤日</th>
                                 <th>氏名</th>
                                 <th>役職</th>
                                 <th>出勤時間</th>
@@ -23,12 +22,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($uniqueday as $a)
+                            @foreach($result as $a)
+                            
                             <tr>
                                 <td>a</td>
-                                <td>b</td>
-                                <td>{{ $a->username }}</td>
-                                <td>d</td>
+                                <td>c</td>
+                             　 <td>{{ $a->username }}</td>
+                                <td>{{ $a->starttime }}</td>
                                 <td></td>
                                 <td></td>
                                 
@@ -36,6 +36,7 @@
                             @endforeach
                             
                         </tbody>
+                        
                     </table>
                 </div>
             </div>

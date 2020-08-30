@@ -25,7 +25,7 @@ class WorkScheduleController extends Controller
         
         
     
-        return view('users.work_schedule.my_work_schedule', ['dates' => $this->getCalendarDates($intyear,$intmonth), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
+        return view('users.work_schedule.my', ['dates' => $this->getCalendarDates($intyear,$intmonth), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
     //名前をとるメソッド
@@ -44,23 +44,44 @@ class WorkScheduleController extends Controller
         $date = date('m/d');
         
         
-        
+        //user_idの重複をのぞくupdated_atの一番大きい値の検索
         $uniqueday = DB::table('works')
-        ->select(DB::raw('max(id), user_id, max(updated_at)'))
+        ->select(DB::raw('user_id, max(target_date) as max_target_date'))
         ->whereDate('target_date', date('Y-m-d'))
         ->groupBy('user_id')
         ->get();
+        var_dump($uniqueday);
         
         
-        foreach($uniqueday as $a) {
+        $result = array();
+        
+        //$uniquedayがダンボール箱$uniquesがダンボール箱の中の箱
+        foreach($uniqueday as $uniques) {
+            $user_id = $uniques->user_id;
+            $updated_at = $uniques->max_target_date;
+            
+            $starttime = DB::table('works')
+            ->where('user_id', $user_id)
+            ->where('target_date', $updated_at)
+            ->first();
+            
+            array_push($result, $starttime);
+            
+        }
+        
+        
+        
+        
+        foreach($result as $a) {
         $a->username = $this->getUserName($a->user_id);
         }
-        var_dump($uniqueday);
+        //var_dump($uniqueday);
+        
         
         $work = Work::all();
         
         
-        return view('users.work_schedule.whole_work_schedule', ['date' => $date , 'work' => $work , 'uniqueday' => $uniqueday ]);
+        return view('users.work_schedule.whole', ['date' => $date , 'work' => $work , 'result' => $result]);
     }
     
     public function date(Request $request) {
@@ -79,7 +100,7 @@ class WorkScheduleController extends Controller
         
         
         
-        return view('users.work_schedule.date_work_schedule',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
+        return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
     }
     
     public function update(Request $request) {
@@ -98,7 +119,7 @@ class WorkScheduleController extends Controller
         $work->user_id = Auth::id();
         $work->save();
         
-        return redirect('users.work_schedule.my_work_schedule');
+        return redirect('users/work_schedule/my');
     }
     
     public function leave() {
@@ -131,5 +152,6 @@ class WorkScheduleController extends Controller
         
         return view('users.work_schedule.sample');
     }
+    
     
 }

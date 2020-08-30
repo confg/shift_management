@@ -1,14 +1,13 @@
-@extends('layouts.work_schedule')
+@extends('layouts.users')
 
 @section('content')
 <body>
-    <h1>マイページ</h1>
     <div class="container">
         <div class="content">
             <div class="info">
                 
             </div>
-            
+            <h1>マイページ</h1>
             <div class="content-left">
                 
                 <div class="buttom-bule">

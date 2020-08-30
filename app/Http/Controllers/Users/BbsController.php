@@ -17,7 +17,7 @@ class BbsController extends Controller
     public function add()
     {
       
-      return view('users.bbs.bbs_create');
+      return view('users.bbs.create');
       
     }
     
@@ -52,11 +52,13 @@ class BbsController extends Controller
       $bbs->save();
       
       
-      return redirect('users.bbs.bbs_list');
+      return redirect('users/bbs/index');
       
     }
     
     public function index(Request $request) {
+      
+      $paginate = Bbs::simplePaginate(10);
       
       $cond_title = $request->cond_title;
       if ($cond_title != '') {
@@ -64,12 +66,12 @@ class BbsController extends Controller
           $posts = Bbs::where('title', $cond_title)->get();
       } else {
           
-          $posts = Bbs::all();
+          $posts = Bbs::simplePaginate(10);
       }
       
       
       
-      return view('users.bbs.bbs_list', ['posts' => $posts, 'cond_title' => $cond_title]);
+      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'paginate' => $paginate]);
       
     }
     
@@ -104,7 +106,7 @@ class BbsController extends Controller
       
       
       
-      return redirect('users/bbs/bbs_list');
+      return redirect('users/bbs/index');
     }
     
     public function delete(Request $request)
@@ -113,7 +115,7 @@ class BbsController extends Controller
       $bbs = Bbs::find($request->id);
 
       $bbs->delete();
-      return redirect('users.bbs.bbs_list');
+      return redirect('users/bbs/index');
     }
     
     

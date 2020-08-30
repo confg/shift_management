@@ -10,7 +10,7 @@
                 <form action="{{ action('Users\WorkScheduleController@update') }}" method="post">
                     <div>
                         <p>予定出勤時間</p>
-                        <input type="time" min="0:00" max="23:59" required name="time" value="{{ old('time') }}">
+                        <input type="time" min="0:00" max="23:59" required name="starttime" value="{{ old('starttime') }}">
                     </div>
                     
                     <div>
@@ -33,12 +33,13 @@
                                 <input type="submit" value="更新">
                             </div>
                         </div>
+                        
                     </div>
                     @if ( $work != null )
-                          <input type="hidden" name="id" value="{{ $work->id }}">
-                        @else
-                          <input type="hidden" name="id" value="">
-                        @endif
+                        <input type="hidden" name="id" value="{{ $work->id }}">
+                    @else
+                        <input type="hidden" name="id" value="">
+                    @endif
                         
                         <input type="hidden" name="target_date"  value="{{ $date }}">
                 </form>
