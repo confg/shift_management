@@ -23,16 +23,31 @@ class WorkScheduleController extends Controller
         $month = date('m');
         $intmonth = intval($month);
         
+        $next_month = strtotime('+1 month');
+        $previous_month =date('-1 month');
         
     
-        return view('users.work_schedule.my', ['dates' => $this->getCalendarDates($intyear,$intmonth), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
+        return view('users.work_schedule.my', ['dates' => $this->CalendarTest(), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
+    }
+    
+    public function month() {
+        $next_year = date('Y', strtotime(date('Y') . '+1 month'));
+        
+        $intyear = intval($next_year);
+        
+        $next_month = date('m', strtotime(date('m') . '+1 month'));
+        
+        $intmonth = intval($next_month);
+        
+
+        return view('users.work_schedule.my', ['currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
     //名前をとるメソッド
     public function getUserName($user_id) {
         $username = DB::table('users')
         ->select('name')
-        ->where('id','=',$user_id)
+        ->where('id',$user_id)
         ->first();
         
         return $username->name;
@@ -44,7 +59,7 @@ class WorkScheduleController extends Controller
         $date = date('m/d');
         
         
-        //user_idの重複をのぞくupdated_atの一番大きい値の検索
+        //user_idの重複をのぞくtarget_dateの一番大きい値の検索
         $uniqueday = DB::table('works')
         ->select(DB::raw('user_id, max(target_date) as max_target_date'))
         ->whereDate('target_date', date('Y-m-d'))
@@ -127,10 +142,67 @@ class WorkScheduleController extends Controller
         return view('users.work_schedule.leave_application');
     }
     
+    public function CalendarTest() {
+        // 現在の年月を取得
+        $year = date('Y');
+        $month = date('n');
+        
+        
+        
+        // 月末日を取得
+        $last_day = date('j', mktime(0, 0, 0, $month + 1, 0, $year));
+         
+        $calendar = array();
+        $j = 0;
+         
+        // 月末日までループ
+        for ($i = 1; $i < $last_day + 1; $i++) {
+         
+            // 曜日を取得
+            $week = date('w', mktime(0, 0, 0, $month, $i, $year));
+         
+            // 1日の場合
+            if ($i == 1) {
+         
+                // 1日目の曜日までをループ
+                for ($s = 1; $s <= $week; $s++) {
+         
+                    // 前半に空文字をセット
+                    $calendar[$j]['day'] = '';
+                    $j++;
+         
+                }
+         
+            }
+         
+            // 配列に日付をセット
+            $calendar[$j]['day'] = $i;
+            $j++;
+         
+            // 月末日の場合
+            if ($i == $last_day) {
+         
+                // 月末日から残りをループ
+                for ($e = 1; $e <= 6 - $week; $e++) {
+         
+                    // 後半に空文字をセット
+                    $calendar[$j]['day'] = '';
+                    $j++;
+         
+                }
+         
+            }
+         
+        }
+        return $calendar;
+    }
+    
+    
+    
     public function getCalendarDates($year, $month)
     {
         $dateStr = sprintf('%04d-%02d-01', $year, $month);
-        
+         
         $date = new Carbon($dateStr);
         
         // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
@@ -148,9 +220,21 @@ class WorkScheduleController extends Controller
         return $dates;
     }
     
+    
+    
+    
+    
+    
+    
+    
     public function sample(){
         
-        return view('users.work_schedule.sample');
+        $sample = DB::table('works')
+        ->select('user_id','target_date','starttime','endtime')
+        ->get();
+        
+        var_dump($sample);
+        return view('users.work_schedule.sample',[ 'sample' => $sample ]);
     }
     
     

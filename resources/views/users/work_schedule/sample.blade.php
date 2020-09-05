@@ -8,5 +8,17 @@
 </head>
 <body>
     <h1>aaaa</h1>
+    @foreach($sample as $samples)
+
+    <tr>
+        <td>a</td>
+        <td>b</td>
+    </tr>
+    
+    <tr>
+        <td>{{ samples }}</td>
+        <td>{{  }}</td>
+    </tr>
+    @endforeach
 </body>
 </html>

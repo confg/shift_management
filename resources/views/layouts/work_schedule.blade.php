@@ -13,6 +13,7 @@
     
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('css/work.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/my.css') }}" rel="stylesheet" type="text/css">
     
     
     <div class="header-buttom">

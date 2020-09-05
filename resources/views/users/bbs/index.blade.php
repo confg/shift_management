@@ -65,7 +65,7 @@
                                     
                                     <tr>
                                         
-                                       <td><a href={{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
+                                       <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
