@@ -30,7 +30,7 @@ class WorkScheduleController extends Controller
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest(), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
-    public function month() {
+    public function next() {
         $next_year = date('Y', strtotime(date('Y') . '+1 month'));
         
         $intyear = intval($next_year);

@@ -9,7 +9,7 @@
             </div>
             <h1>マイページ</h1>
             <div class="content-left">
-                
+            
                 <div class="buttom-bule">
                     <a href="{{ action('Users\WorkScheduleController@add') }}">自分の勤務表</a>
                 </div>

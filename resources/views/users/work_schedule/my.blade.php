@@ -5,7 +5,7 @@
         <h1>自分の勤務表</h1>
         <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>
         <a>前月</a>
-        <a href="{{ action('Users\WorkScheduleController@next') }}">翌月</a>
+        <a href="">翌月</a>
 
         <table>
             <tr>
