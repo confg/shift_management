@@ -46,6 +46,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     Route::get('work_schedule/my','Users\WorkScheduleController@add');
     
+    Route::get('work_schedule/next','Users\WorkScheduleController@next');
+    
     
     
     Route::get('work_schedule/whole','Users\WorkScheduleController@whole');

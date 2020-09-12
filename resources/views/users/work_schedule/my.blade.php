@@ -4,9 +4,9 @@
     <body>
         <h1>自分の勤務表</h1>
         <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>
+        
         <a>前月</a>
-        <a href="">翌月</a>
-
+        <a href="{{ action('Users\WorkScheduleController@next', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth ]) }}">翌月</a>
         <table>
             <tr>
                 <th>日</th>
@@ -24,7 +24,7 @@
          
                 <td>
                 <?php $cnt++; ?>
-                <a href = >{{  $value['day'] }}</a>
+                <a href ="{{ action('Users\WorkScheduleController@date', [ 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
                 </td>
             
                 @if ($cnt == 7)

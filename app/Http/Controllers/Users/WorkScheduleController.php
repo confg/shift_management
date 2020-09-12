@@ -27,20 +27,26 @@ class WorkScheduleController extends Controller
         $previous_month =date('-1 month');
         
     
-        return view('users.work_schedule.my', ['dates' => $this->CalendarTest(), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
+        return view('users.work_schedule.my', ['dates' => $this->CalendarTest($year,$month), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
-    public function next() {
-        $next_year = date('Y', strtotime(date('Y') . '+1 month'));
+    public function next(Request $request) {
         
-        $intyear = intval($next_year);
         
-        $next_month = date('m', strtotime(date('m') . '+1 month'));
+        $now = new \DateTime();
         
-        $intmonth = intval($next_month);
         
-
-        return view('users.work_schedule.my', ['currentMonth' => $intmonth, 'currentYear' => $intyear]);
+        $currentYear = $request->input('currentYear');
+        $currentMonth = $request->input('currentMonth');
+        
+        $now->setdate($currentYear,$currentMonth,1);
+        
+        $now->modify('+1 month');
+        //送る値をひとつふやす
+        //44行目に固定じゃなくて変数にして渡す
+        
+        
+        return view('users.work_schedule.my', ['dates' => $this->CalendarTest($now->format('Y'), $now->format('m')), 'currentMonth' => $now->format('m'), 'currentYear' => $now->format('Y')]);
     }
     
     //名前をとるメソッド
@@ -100,7 +106,8 @@ class WorkScheduleController extends Controller
     }
     
     public function date(Request $request) {
-        
+        //input URL以外の情報を詰め込んでくれる　取得するメソッド
+        //$requestは連想配列
         $month = $request->input('currentMonth');
         $year = $request->input('currentYear');
         $day = $request->input('currentDay');
@@ -112,7 +119,7 @@ class WorkScheduleController extends Controller
         ->whereDate('target_date', $date)
         ->first();
         
-        
+        //var_dump($request);
         
         
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
@@ -142,10 +149,13 @@ class WorkScheduleController extends Controller
         return view('users.work_schedule.leave_application');
     }
     
-    public function CalendarTest() {
+    //外からきた変数で使える状態に
+    public function CalendarTest($year,$month) {
         // 現在の年月を取得
-        $year = date('Y');
-        $month = date('n');
+        
+        
+        //$year = date('Y');
+        //$month = date('n');
         
         
         
