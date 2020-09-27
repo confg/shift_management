@@ -46,7 +46,9 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     Route::get('work_schedule/my','Users\WorkScheduleController@add');
     
-    Route::get('work_schedule/next','Users\WorkScheduleController@next');
+    Route::get('work_schedule/next','Users\WorkScheduleController@monthmove');
+   
+    
     
     
     
@@ -56,8 +58,12 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     Route::post('work_schedule/date','Users\WorkScheduleController@update');
     
-    Route::get('work_schedule/leave_application','Users\WorkScheduleController@leave');
+    Route::get('leave/application','Users\WorkScheduleController@leave');
+    Route::post('leave/application','Users\WorkScheduleController@application');
     
-    Route::get('work_schedule/sample','Users\WorkScheduleController@sample');
+    Route::get('leave/management','Users\WorkScheduleController@management');
+    
+    
+    Route::get('work_schedule/test','Users\WorkScheduleController@test');
 });
 

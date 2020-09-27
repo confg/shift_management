@@ -5,8 +5,8 @@
         <h1>自分の勤務表</h1>
         <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>
         
-        <a>前月</a>
-        <a href="{{ action('Users\WorkScheduleController@next', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth ]) }}">翌月</a>
+        <a href="{{ action('Users\WorkScheduleController@monthmove', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'mode' => '-1' ]) }}">前月</a>
+        <a href="{{ action('Users\WorkScheduleController@monthmove', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'mode' => '+1' ]) }}">翌月</a>
         <table>
             <tr>
                 <th>日</th>

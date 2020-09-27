@@ -14,7 +14,7 @@
     
         <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
     
-        <a href="{{ action('Users\WorkScheduleController@sample') }}">sample</a>
+        <a href="{{ action('Users\WorkScheduleController@management') }}">休暇申請受け取り先</a>
         
     </div>    
     <div class="container">

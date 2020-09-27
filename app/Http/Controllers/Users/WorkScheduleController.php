@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Work;
 use App\Bbs;
 use App\User;
+use App\Leave;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -23,14 +24,13 @@ class WorkScheduleController extends Controller
         $month = date('m');
         $intmonth = intval($month);
         
-        $next_month = strtotime('+1 month');
-        $previous_month =date('-1 month');
+        
         
     
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($year,$month), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
-    public function next(Request $request) {
+    public function monthmove(Request $request) {
         
         
         $now = new \DateTime();
@@ -38,16 +38,24 @@ class WorkScheduleController extends Controller
         
         $currentYear = $request->input('currentYear');
         $currentMonth = $request->input('currentMonth');
+        $zenngetu = $request->input('mode');
+        
         
         $now->setdate($currentYear,$currentMonth,1);
         
-        $now->modify('+1 month');
-        //送る値をひとつふやす
-        //44行目に固定じゃなくて変数にして渡す
+        
+        //modeに+1と-1の値を与える、リクエストで受け取る、modify()の引数の中に変数と文字列で結合する
+        
+        $now->modify($zenngetu.' month');
+        
+        var_dump($zenngetu);
         
         
+
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($now->format('Y'), $now->format('m')), 'currentMonth' => $now->format('m'), 'currentYear' => $now->format('Y')]);
     }
+    
+    
     
     //名前をとるメソッド
     public function getUserName($user_id) {
@@ -144,10 +152,7 @@ class WorkScheduleController extends Controller
         return redirect('users/work_schedule/my');
     }
     
-    public function leave() {
-        
-        return view('users.work_schedule.leave_application');
-    }
+    
     
     //外からきた変数で使える状態に
     public function CalendarTest($year,$month) {
@@ -185,7 +190,7 @@ class WorkScheduleController extends Controller
          
             }
          
-            // 配列に日付をセット
+            // 配列に日付をセッ��
             $calendar[$j]['day'] = $i;
             $j++;
          
@@ -233,19 +238,72 @@ class WorkScheduleController extends Controller
     
     
     
-    
-    
-    
-    
-    public function sample(){
+    public function leave(Request $request) {
         
-        $sample = DB::table('works')
-        ->select('user_id','target_date','starttime','endtime')
-        ->get();
         
-        var_dump($sample);
-        return view('users.work_schedule.sample',[ 'sample' => $sample ]);
+        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()) ]);
     }
     
+    
+    public function application(Request $request) {
+        
+        $leave = new Leave;
+        $form = $request->all();
+        
+        
+        
+        $leave->fill($form);
+        //$leave->user_id = Auth::id();
+        $leave->save();
+        
+        return redirect('users/mypege');
+    }
+    
+    
+    
+    public function management(){
+        
+        $manage = Leave::all();
+        
+        /*
+        $grant = DB::table('leaves')
+        ->wherenull('permit')
+        ->wherenull('blocking')
+        ->get();
+        */
+        $availability = config('availability');
+        
+        $manage->item = $availability;
+        
+        /*
+        $user_name = DB::table('users')
+        ->select('users.name as users_name')
+        ->leftJoin('leaves', 'users.id', '=', 'leaves.user_id')
+        ->get();
+        */
+        
+        
+        
+        var_dump($manage);
+        
+       
+        return view('users.leave.management', [ 'manage'  => $manage ]);
+    }
+    
+    
+    public function test(Request $request) {
+        
+        
+        
+        $tests = Leave::find($request->id);
+        
+        var_dump($request->id);
+        
+        
+        
+        
+        
+        return view('users.leave.test', [ 'tests' => $tests ]);
+    }
     
 }
