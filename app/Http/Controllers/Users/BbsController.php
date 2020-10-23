@@ -69,8 +69,7 @@ class BbsController extends Controller
           $posts = Bbs::simplePaginate(10);
       }
       
-      
-      
+
       return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'paginate' => $paginate]);
       
     }
@@ -127,7 +126,7 @@ class BbsController extends Controller
       
       
       
-      return view('users.bbs.bbs_front', ['bbs' => $bbs]);
+      return view('users.bbs.front', ['bbs' => $bbs]);
     }
     
     

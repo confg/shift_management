@@ -5,7 +5,7 @@
     <h1>休暇申請</h1>
     <div class="container">
         <div class="">
-            <form action="{{ action('Users\WorkScheduleController@application') }}" method="post">
+            <form action="{{ action('Users\LeaveController@application') }}" method="post">
                 <div class="content">
                     <div class="content-item">
                         <label>氏名</label>
@@ -21,8 +21,12 @@
                         </div>
                     </div>
                     <div class="radio-button">
-                        <input name="item" type="radio" value="1" required/>有給
-                        <input name="item" type="radio" value="2" required/>その他
+                        
+                        @foreach($all as $alls)
+                        <input name="leave_reason_master_id" type="radio" value="{{ $alls->id }}" required/>{{ $alls->reason_name }}
+                        @endforeach
+                        
+                        
                     </div>
                     <div class="">
                         <label>備考・理由</label>

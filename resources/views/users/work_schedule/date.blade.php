@@ -26,7 +26,7 @@
                     <div>
                         <p>実働退社時間</p>
                         <input type="time" min="0:00" max="23:59" disabled="disabled"   name="" value="">
-                        {{ csrf_field() }}
+                        
                         <div>
                             
                             <div>
@@ -40,8 +40,8 @@
                     @else
                         <input type="hidden" name="id" value="">
                     @endif
-                        
-                        <input type="hidden" name="target_date"  value="{{ $date }}">
+                    <input type="hidden" name="target_date"  value="{{ $date }}">
+                    {{ csrf_field() }}
                 </form>
             </div>
         </div>

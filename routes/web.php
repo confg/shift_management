@@ -22,6 +22,20 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@home')->name('home');
 
+
+//ゲート機能で管理者のみアクセス可
+Route::group(['prefix' => 'users', 'middleware' => ['auth', 'can:admin']], function () {
+    
+	Route::get('leave/management','Users\LeaveController@management');
+	Route::get('leave/front','Users\LeaveController@front');
+	
+	Route::get('work_schedule/whole','Users\WorkScheduleController@whole');
+});
+
+
+
+
+
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
@@ -29,7 +43,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
     
-    Route::get('bbs/bbs_front', 'Users\BbsController@front');
+    Route::get('bbs/front', 'Users\BbsController@front');
     
     Route::get('bbs/index', 'Users\BbsController@index');
     
@@ -43,27 +57,27 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
     
-    
     Route::get('work_schedule/my','Users\WorkScheduleController@add');
+    Route::post('work_schedule/my','Users\WorkScheduleController@attendance');
     
     Route::get('work_schedule/next','Users\WorkScheduleController@monthmove');
    
     
     
     
-    
-    Route::get('work_schedule/whole','Users\WorkScheduleController@whole');
-    
     Route::get('work_schedule/date','Users\WorkScheduleController@date');
     
     Route::post('work_schedule/date','Users\WorkScheduleController@update');
     
-    Route::get('leave/application','Users\WorkScheduleController@leave');
-    Route::post('leave/application','Users\WorkScheduleController@application');
-    
-    Route::get('leave/management','Users\WorkScheduleController@management');
     
     
-    Route::get('work_schedule/test','Users\WorkScheduleController@test');
+    Route::get('leave/application','Users\LeaveController@leave');
+    Route::post('leave/application','Users\LeaveController@application');
+    
+    
+    
+    Route::get('leave/result','Users\LeaveController@result');
+    
+    Route::post('leave/test','Users\LeaveController@update');
 });
 

@@ -10,6 +10,7 @@ use App\Work;
 use App\Bbs;
 use App\User;
 use App\Leave;
+use App\Attendance;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -95,11 +96,7 @@ class WorkScheduleController extends Controller
             ->first();
             
             array_push($result, $starttime);
-            
         }
-        
-        
-        
         
         foreach($result as $a) {
         $a->username = $this->getUserName($a->user_id);
@@ -127,7 +124,7 @@ class WorkScheduleController extends Controller
         ->whereDate('target_date', $date)
         ->first();
         
-        //var_dump($request);
+        var_dump($date);
         
         
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
@@ -235,75 +232,17 @@ class WorkScheduleController extends Controller
         return $dates;
     }
     
-    
-    
-    
-    public function leave(Request $request) {
+    public function attendance(Request $request) {
         
+        $attendance = new Attendance;
         
-        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()) ]);
-    }
-    
-    
-    public function application(Request $request) {
-        
-        $leave = new Leave;
         $form = $request->all();
         
         
+        $attendance->fill($form);
+        $attendance->save();
         
-        $leave->fill($form);
-        //$leave->user_id = Auth::id();
-        $leave->save();
+        return view('users.mypege');
         
-        return redirect('users/mypege');
     }
-    
-    
-    
-    public function management(){
-        
-        $manage = Leave::all();
-        
-        /*
-        $grant = DB::table('leaves')
-        ->wherenull('permit')
-        ->wherenull('blocking')
-        ->get();
-        */
-        $availability = config('availability');
-        
-        $manage->item = $availability;
-        
-        /*
-        $user_name = DB::table('users')
-        ->select('users.name as users_name')
-        ->leftJoin('leaves', 'users.id', '=', 'leaves.user_id')
-        ->get();
-        */
-        
-        
-        
-        var_dump($manage);
-        
-       
-        return view('users.leave.management', [ 'manage'  => $manage ]);
-    }
-    
-    
-    public function test(Request $request) {
-        
-        
-        
-        $tests = Leave::find($request->id);
-        
-        var_dump($request->id);
-        
-        
-        
-        
-        
-        return view('users.leave.test', [ 'tests' => $tests ]);
-    }
-    
 }

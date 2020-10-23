@@ -12,9 +12,9 @@
     
         <a href="{{ action('Users\BbsController@index') }}">掲示板</a>
     
-        <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
+        <a href="{{ action('Users\LeaveController@leave') }}">休暇申請</a>
     
-        <a href="{{ action('Users\WorkScheduleController@management') }}">休暇申請受け取り先</a>
+        <a href="{{ action('Users\LeaveController@management') }}">休暇申請受け取り先</a>
         
     </div>    
     <div class="container">
@@ -56,7 +56,9 @@
                                 <th>本文</th>
                                 <th>掲載日</th>
                                 <th>掲載者</th>
+                                @can('admin')
                                 <th>操作</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -67,8 +69,9 @@
                                         
                                        <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
-                                       <td>{{ \Illuminate\Support\Str::limit($bbs->posted_at, 250) }}</td>
+                                       <td>{{ \Illuminate\Support\Str::limit(date('Y年m月d日',  strtotime($bbs->posted_at)), 250) }}</td>
                                        <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
+                                       @can('admin')
                                        <td>
                                             <div>
                                                 <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
@@ -77,6 +80,7 @@
                                                 <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>  
                                     
                                 </div>    

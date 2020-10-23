@@ -3,6 +3,13 @@
 @section('content')
     <body>
         <h1>自分の勤務表</h1>
+        <form action="{{ action('Users\WorkScheduleController@attendance') }}" method="post">
+            {{ csrf_field() }}
+            
+            <input type="submit" name="attendance" value="出勤"/>
+        </form>  
+        
+        
         <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>
         
         <a href="{{ action('Users\WorkScheduleController@monthmove', ['currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'mode' => '-1' ]) }}">前月</a>
@@ -24,7 +31,7 @@
          
                 <td>
                 <?php $cnt++; ?>
-                <a href ="{{ action('Users\WorkScheduleController@date', [ 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
+                <a href ="{{ action('Users\WorkScheduleController@date', [ 'currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
                 </td>
             
                 @if ($cnt == 7)

@@ -26,8 +26,8 @@
                             <tr>
                                 <td>a</td>
                              　 <td>{{ $status->username }}</td>
-                                <td>{{ $status->starttime }}</td>
-                                <td>{{ $status->endtime }}</td>
+                                <td>{{ date('H時i分',  strtotime($status->starttime)) }}</td>
+                                <td>{{ date('H時i分',  strtotime($status->endtime)) }}</td>
                                 <td></td>
                                 
                             </tr>

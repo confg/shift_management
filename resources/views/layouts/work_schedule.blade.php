@@ -25,9 +25,9 @@
     
         <a href="{{ action('Users\BbsController@index') }}">掲示板</a>
     
-        <a href="{{ action('Users\WorkScheduleController@leave') }}">休暇申請</a>
+        <a href="{{ action('Users\LeaveController@leave') }}">休暇申請</a>
     
-        <a href="{{ action('Users\WorkScheduleController@management') }}">休暇申請受け取り先</a>
+        <a href="{{ action('Users\LeaveController@management') }}">休暇申請受け取り先</a>
         
     </div>    
 <body>
