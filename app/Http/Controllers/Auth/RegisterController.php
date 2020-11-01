@@ -36,7 +36,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('guest');
     }
 
     /**
@@ -66,8 +66,26 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            //$data['role']がnameの'role'
+            'role' => isset($data['role']) && $data['role']==='true',
         ]);
     }
     
- 
+    public function getRegister()
+    {
+        return view('auth.register');
+    }
+    
+     public function postRegister(Request $data)
+    {
+        // ユーザ登録処理
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+        
+        // ホーム画面へリダイレクト
+        return redirect('/home');
+    }
 }

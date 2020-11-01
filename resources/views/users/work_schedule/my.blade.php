@@ -1,13 +1,9 @@
-@extends('layouts.work_schedule')
+@extends('layouts.admin')
 
 @section('content')
     <body>
         <h1>自分の勤務表</h1>
-        <form action="{{ action('Users\WorkScheduleController@attendance') }}" method="post">
-            {{ csrf_field() }}
-            
-            <input type="submit" name="attendance" value="出勤"/>
-        </form>  
+        
         
         
         <h2>{{ $currentYear.'年'.$currentMonth.'月' }}</h2>

@@ -30,6 +30,8 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth', 'can:admin']], funct
 	Route::get('leave/front','Users\LeaveController@front');
 	
 	Route::get('work_schedule/whole','Users\WorkScheduleController@whole');
+	
+	
 });
 
 
@@ -79,5 +81,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     Route::get('leave/result','Users\LeaveController@result');
     
     Route::post('leave/test','Users\LeaveController@update');
+    
+   
+    
 });
 

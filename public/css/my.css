@@ -3,7 +3,11 @@ table {
 }
 
 table th {
-  background: #EEEEEE;
+  background: #00bfff;
+}
+
+table td {
+  background: #28a745;
 }
 
 table th,
@@ -11,5 +15,50 @@ table td {
   border: 1px solid #CCCCCC;
   text-align: center;
   padding: 5px;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover {
+  color: #fff;
+}
+
+.header {
+  background: #343a40;
+  padding-bottom: 50px;
+  margin-bottom: 100px;
+}
+
+.black {
+  display: inline-block;
+  width: auto;
+  margin: auto;
+  padding: 10px;
+}
+
+.black:hover {
+  background: #6c757d;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-right {
+  float: right;
+  list-style: none;
+}
+
+.black,
+.header-right {
+  text-align: center;
+}
+
+.next {
+  background: black;
+  padding: auto;
+  margin: auto;
 }
 

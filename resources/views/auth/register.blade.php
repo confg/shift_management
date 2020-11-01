@@ -67,7 +67,8 @@
                                 </button>
                             </div>
                         </div>
-                        <input type="checkbox" name="admin" value="true">管理者
+                        
+                        <input type="checkbox" name="role" value="true">管理者
                     </form>
                 </div>
             </div>

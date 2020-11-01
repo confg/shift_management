@@ -1,22 +1,9 @@
-@extends('layouts.users')
+@extends('layouts.work_schedule')
 @section('title', '登録済みの掲示板一覧')
 
 @section('content')
 
-    <div class="header-buttom">
-        <a href="{{ action('Users\UserController@add') }}">マイページ</a>
-    
-        <a href="{{ action('Users\WorkScheduleController@add') }}">自分の勤務表</a>
-    
-        <a href="{{ action('Users\WorkScheduleController@whole') }}">全体の勤務表</a>
-    
-        <a href="{{ action('Users\BbsController@index') }}">掲示板</a>
-    
-        <a href="{{ action('Users\LeaveController@leave') }}">休暇申請</a>
-    
-        <a href="{{ action('Users\LeaveController@management') }}">休暇申請受け取り先</a>
-        
-    </div>    
+   
     <div class="container">
         <h1>掲示板一覧<h1>
     </div>
@@ -46,51 +33,47 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="list-news col-md-12 mx-auto">
-                <div class="row">
-                    <table class="table table-dark">
-                        <thead>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>タイトル</th>
+                        <th>本文</th>
+                        <th>掲載日</th>
+                        <th>掲載者</th>
+                        @can('admin')
+                        <th>操作</th>
+                        @endcan
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($posts as $bbs)
+                        <div class="widelink">
+                            
                             <tr>
-                                <th>タイトル</th>
-                                <th>本文</th>
-                                <th>掲載日</th>
-                                <th>掲載者</th>
-                                @can('admin')
-                                <th>操作</th>
+                                
+                               <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
+                               <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
+                               <td>{{ \Illuminate\Support\Str::limit(date('Y年m月d日',  strtotime($bbs->posted_at)), 250) }}</td>
+                               <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
+                               @can('admin')
+                               <td>
+                                    <div>
+                                        <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
+                                    </div>
+                                    <div>
+                                        <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
+                                    </div>
+                                </td>
                                 @endcan
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($posts as $bbs)
-                                <div class="widelink">
-                                    
-                                    <tr>
-                                        
-                                       <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
-                                       <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
-                                       <td>{{ \Illuminate\Support\Str::limit(date('Y年m月d日',  strtotime($bbs->posted_at)), 250) }}</td>
-                                       <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
-                                       @can('admin')
-                                       <td>
-                                            <div>
-                                                <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
-                                            </div>
-                                            <div>
-                                                <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                    </tr>  
-                                    
-                                </div>    
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div>
-                        {{ $posts->links() }}
-                    </div>
-                </div>
+                            </tr>  
+                            
+                        </div>    
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="next">
+                {{ $posts->links() }}
             </div>
         </div>
     </div>

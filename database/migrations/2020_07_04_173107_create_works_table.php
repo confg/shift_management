@@ -19,6 +19,8 @@ class CreateWorksTable extends Migration
             $table->date('target_date');
             $table->time('starttime');
             $table->time('endtime');
+            $table->time('attendance')->default('00:00:00');
+            $table->time('leaving')->default('00:00:00');
             $table->timestamps();
         });
     }

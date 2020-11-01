@@ -1,4 +1,23 @@
-.header-buttom {
+.header {
   display: inline-block;
+}
+
+table {
+  width: 100%;
+}
+
+table th {
+  background: #fff;
+}
+
+table td {
+  background: #fff;
+}
+
+table th,
+table td {
+  border: 1px solid #CCCCCC;
+  text-align: center;
+  padding: 5px;
 }
 

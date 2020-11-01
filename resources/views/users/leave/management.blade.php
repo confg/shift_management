@@ -5,10 +5,10 @@
  
 　　<table>
 　　     <tr>
-　　        <td>氏名</td>
-　　        <td>日付</td>
-　　        <td>有給・その他</td>
-　　        <td>備考・理由</td>
+　　        <th>氏名</th>
+　　        <th>日付</th>
+　　        <th>有給・その他</th>
+　　        <th>備考・理由</th>
 　　     </tr>
 　　     @foreach($manage as $test)
 　　     <tr>
