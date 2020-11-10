@@ -1,8 +1,8 @@
-@extends('layouts.users')
+@extends('layouts.work_schedule')
 @section('title', '掲示板タイトル')
 
 @section('content')
-  <div>
+  <div  class="front">
     <div>
       <div>
         

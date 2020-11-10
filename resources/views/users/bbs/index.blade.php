@@ -26,10 +26,7 @@
                             <input type="submit" class="btn btn-primary" value="検索">
                         </div>
                     </div>
-                    <select name="narabi">
-                        <option value="asc">昇順</option>
-                        <option value="desc">降順</option>
-                    </select>
+                    
                 </form>
             </div>
         </div>

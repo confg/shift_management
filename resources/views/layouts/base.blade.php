@@ -13,39 +13,11 @@
     
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     
-    <link href="{{ secure_asset('css/my.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ secure_asset('css/base.css') }}" rel="stylesheet" type="text/css">
     
     
-    <div class="header">
-        <div class="header-left">
-            <div class="black">
-                <a class="block" href="{{ action('Users\UserController@add') }}">マイページ</a>
-            </div>
-            
-            <div class="black">
-                <a class="block" href="{{ action('Users\BbsController@index') }}">掲示板</a>
-            </div>
-            <div class="black">
-                <a class="block" href="{{ action('Users\WorkScheduleController@add') }}">自分の勤務表</a>
-            </div>
-            @can('user')
-            <div class="black">
-                <a class="block" href="{{ action('Users\LeaveController@leave') }}">休暇申請</a>
-            </div>
-            <div class="black">
-                <a class="block" href="{{ action('Users\LeaveController@result') }}">休暇申請結果</a>
-            </div>
-            @endcan
-            
-            @can('admin')
-            <div class="black">
-                <a class="block" href="{{ action('Users\WorkScheduleController@whole') }}">全体の勤務表</a>
-            </div>
-            <div class="black">
-                <a class="block" href="{{ action('Users\LeaveController@management') }}">休暇申請受け取り先</a>
-            </div>
-            @endcan
-        </div>
+    <div class ="header">
+        
         <ul class="header-right">
             
             @guest
@@ -69,8 +41,10 @@
                 </div>
             </li>
             @endguest
+            {{-- 以上までを追記 --}}
         </ul>
-    </div>
+        
+    </div>    
 <body>
     @yield('content')
 </body>

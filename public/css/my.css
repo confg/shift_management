@@ -1,3 +1,7 @@
+body {
+  height: auto;
+}
+
 table {
   width: 100%;
 }
@@ -7,7 +11,7 @@ table th {
 }
 
 table td {
-  background: #28a745;
+  background: #90ee90;
 }
 
 table th,
@@ -32,7 +36,6 @@ a:hover {
 }
 
 .black {
-  display: inline-block;
   width: auto;
   margin: auto;
   padding: 10px;
@@ -44,6 +47,7 @@ a:hover {
 
 .header-left {
   float: left;
+  display: flex;
 }
 
 .header-right {
@@ -60,5 +64,77 @@ a:hover {
   background: black;
   padding: auto;
   margin: auto;
+}
+
+.head,
+.contents,
+.plan {
+  display: flex;
+}
+
+.date {
+  margin-left: 20px;
+}
+
+.text {
+  width: 300px;
+  height: 100px;
+}
+
+.plan-contents {
+  padding: 20px;
+}
+
+.plan-date {
+  margin-left: 200px;
+}
+
+.buttom {
+  width: 100px;
+  height: 30px;
+}
+
+.title {
+  margin: 50px;
+}
+
+.red {
+  background: #ff6347;
+}
+
+.green {
+  background: #98fb98;
+}
+
+.blue {
+  background: #1e90ff;
+}
+
+.width {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.day {
+  background: #a9a9a9;
+  height: 50px;
+}
+
+.month {
+  color: #0000cd;
+}
+
+.block {
+  display: block;
+}
+
+.tr {
+  border: 1px solid;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 20px;
 }
 

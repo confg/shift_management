@@ -1,38 +1,11 @@
 body {
     height: auto;
 }
-.width {
-    width: 70%;
-    margin: 0 auto;
-}
 a {
     color: #fff;
 }
 a:hover {
-    color: #fff;
-}
-.black {
-    width: auto;
-    margin: auto;
-    padding: 10px;
-}
-
-.black:hover {
-    background: #6c757d;
-    
-}
-.header-left {
-    float: left;
-    display: flex;
-}
-.header-right {
-    float: right;
-    list-style: none;
-    
-}
-.black, 
-.header-right {
-    text-align: center;
+    color: #c0c0c0;
 }
 .content {
     display: flex;
@@ -42,6 +15,12 @@ a:hover {
     background: #343a40;
     padding-bottom: 50px;
     margin-bottom: 100px;
+}
+
+.header-right {
+    float: right;
+    list-style: none;
+    text-align: center;
 }
 .buttom-bule {
     background: #4169e1;

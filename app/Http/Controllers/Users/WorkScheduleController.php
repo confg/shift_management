@@ -74,36 +74,27 @@ class WorkScheduleController extends Controller
     public function whole(Request $request) {
         date_default_timezone_set('Asia/Tokyo');
         
+        $date = date('m月j日');
         $sample = $request->target_date;
         
-        
-        if($sample != '') {
-            $date = date('m月d日',  strtotime($sample));
-            $uniqueday = DB::table('works')
-            ->select(DB::raw('user_id, max(target_date) as max_target_date'))
-            ->whereDate('target_date', $sample)
-            ->groupBy('user_id')
-            ->get();
+        if($sample == '') {
+            $sample = date('Y-m-d');
         }else {
-            $date = date('m月d日');
-            $uniqueday = DB::table('works')
-            ->select(DB::raw('user_id, max(target_date) as max_target_date'))
-            ->whereDate('target_date', date('Y-m-d'))
-            ->groupBy('user_id')
-            ->get();
+            $date = date('m月j日',strtotime($request->target_date));
         }
         
         
         
+        
         //user_idの重複をのぞくtarget_dateの一番大きい値の検索
-        /*
+        
         $uniqueday = DB::table('works')
         ->select(DB::raw('user_id, max(target_date) as max_target_date'))
-        ->whereDate('target_date', date('Y-m-d'))
+        ->whereDate('target_date', $sample)
         ->groupBy('user_id')
         ->get();
-        var_dump($sample);
-        */
+        
+        
         
         $result = array();
         
@@ -141,15 +132,17 @@ class WorkScheduleController extends Controller
         
         $date = $year.'-'.$month.'-'.$day;
         
+        
+        
+        
         $work = DB::table('works')
         ->where('user_id', Auth::id())
         ->whereDate('target_date', $date)
         ->first();
         
-        $a =date("Y-m-d");
-        
-        var_dump($work);
-        
+        if($work == null) {
+            $work = new Work;
+        }
         
         
         
@@ -264,24 +257,25 @@ class WorkScheduleController extends Controller
         $work = new Work;
         
         
-        
+        //updateのなかの連想配列をif文の中で分岐させる
+        //からの配列を忘れずに
+        $test = array();
         
         if(isset($request['attendance'])) {
-            DB::table('works')
-            ->where('id', $request->id)
-            ->update([
-                'attendance' => $work->attendance = date("H:i:s")
-            ]);
+            $test = ['attendance' => $work->attendance = date("H:i:s")];
         }elseif(isset($request['leaving'])) {
-            DB::table('works')
-            ->where('id', $request->id)
-            ->update([
-                'leaving' => $work->leaving = date("H:i:s")
-            ]);
+            $test = ['leaving' => $work->leaving = date("H:i:s")];
         }
         
         
-        return view('users.mypege');
+        
+        DB::table('works')
+        ->where('id', $request->id)
+        ->update($test);
+        
+        
+        
+        return $this->add();
         
     }
     
