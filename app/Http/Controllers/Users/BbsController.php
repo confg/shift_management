@@ -83,7 +83,7 @@ class BbsController extends Controller
       }
       
       
-      
+      /*
       //名前の検索がuser_idだったらできる状態
       $cond_name = $request->cond_name;
       if($sort == 'asc' && $cond_name != '') {
@@ -94,6 +94,18 @@ class BbsController extends Controller
         $posts = Bbs::where('user_id', $cond_name)
         ->orderBy('posted_at', 'desc')
         ->simplePaginate(10);
+      }
+      */
+      
+      $cond_name = $request->cond_name;
+      if($sort == 'asc' && $cond_name != '') {
+        $user = User::where('name', $cond_name)->simplePaginate(10);
+        $posts = $user->bbs;
+        
+      }elseif($sort == 'desc' && $cond_name != '') {
+        $user = User::where('name', $cond_name)->simplePaginate(10);
+        $posts = $user->bbs;
+        
       }
       
       
