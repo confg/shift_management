@@ -26,13 +26,13 @@
              
                     <td class="day">
                     <?php $cnt++; ?>
-                    <a href ="{{ action('Users\WorkScheduleController@date', [ 'currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
+                    <a class="dayarea" href ="{{ action('Users\WorkScheduleController@date', [ 'currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
                     </td>
                 
                     @if ($cnt == 7)
                     <tr>
                     <tr/>
-                    <?php $cnt = 0; ?>    
+                    <?php $cnt = 0; ?>
                     @endif
              
                 @endforeach

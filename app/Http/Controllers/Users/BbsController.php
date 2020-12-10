@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Bbs;
-use App\BbsUser;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ class BbsController extends Controller
 {
     
     
-    public function add()
+    public function formcreate()
     {
       
       return view('users.bbs.create');
@@ -56,21 +56,50 @@ class BbsController extends Controller
       
     }
     
+    
+    
     public function index(Request $request) {
       
-      $paginate = Bbs::simplePaginate(10);
+      $posts = Bbs::orderBy('id', 'desc')->simplePaginate(10);
       
-      $cond_title = $request->cond_title;
-      if ($cond_title != '') {
-
-          $posts = Bbs::where('title', $cond_title)->get();
-      } else {
-          
-          $posts = Bbs::simplePaginate(10);
+      //掲載者のソート機能
+      $sort = $request->sort;
+      if ($sort == 'asc') {
+        $posts = Bbs::orderBy('posted_at', 'asc')->simplePaginate(10);
+      }elseif($sort == 'desc') {
+        $posts = Bbs::orderBy('posted_at', 'desc')->simplePaginate(10);
       }
       
-
-      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'paginate' => $paginate]);
+      
+      $cond_title = $request->cond_title;
+      if($sort == 'asc' && $cond_title != '') {
+        $posts = Bbs::where('title', $cond_title)
+        ->orderBy('posted_at', 'asc')
+        ->simplePaginate(10);
+      }elseif($sort == 'desc' && $cond_title != '') {
+        $posts = Bbs::where('title', $cond_title)
+        ->orderBy('posted_at', 'desc')
+        ->simplePaginate(10);
+      }
+      
+      
+      
+      //名前の検索がuser_idだったらできる状態
+      $cond_name = $request->cond_name;
+      if($sort == 'asc' && $cond_name != '') {
+        $posts = Bbs::where('user_id', $cond_name)
+        ->orderBy('posted_at', 'asc')
+        ->simplePaginate(10);
+      }elseif($sort == 'desc' && $cond_name != '') {
+        $posts = Bbs::where('user_id', $cond_name)
+        ->orderBy('posted_at', 'desc')
+        ->simplePaginate(10);
+      }
+      
+      
+      var_dump($sort);
+      
+      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name ]);
       
     }
     
@@ -129,5 +158,14 @@ class BbsController extends Controller
       return view('users.bbs.front', ['bbs' => $bbs]);
     }
     
+    //名前をとるメソッド
+    public function getUserName($user_id) {
+      $username = DB::table('users')
+      ->select('name')
+      ->where('id',$user_id)
+      ->get();
+      
+      return $username->name;
+    }
     
  }

@@ -1,5 +1,10 @@
 body {
     height: auto;
+    margin: 0 auto;
+}
+.width {
+    width: 70%;
+    margin: 0 auto;
 }
 table {
     width: 100%;
@@ -9,33 +14,47 @@ table th {
 }
 table td {
     background: #90ee90;
+    word-break: break-all;
+    
 }
+
 table th,
 table td {
     border: 1px solid #CCCCCC;
     text-align: center;
     padding: 5px;
 }
+.table {
+    width: 100%;
+}
+.table th {
+    background: #fff;
+}
+.table td {
+    background: #fff;
+}
+.table th,
+.table td {
+    border: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
 a {
     color: #fff;
 }
 a:hover {
     color: #fff;
+    text-decoration: none;
 }
 .header {
     background: #343a40;
     padding-bottom: 50px;
     margin-bottom: 100px;
 }
-.black {
-    width: auto;
-    margin: auto;
-    padding: 10px;
-}
 
-.black:hover {
+.block:hover {
     background: #6c757d;
-    
 }
 .header-left {
     float: left;
@@ -55,10 +74,11 @@ a:hover {
     padding: auto;
     margin: auto;
 }
-
+.next:hover {
+    color: black;
+}
 .head,
-.contents,
-.plan {
+.contents {
     display: flex;
 }
 .date {
@@ -72,10 +92,8 @@ a:hover {
     padding: 20px;
     
 }
-.plan-date {
-    margin-left: 200px;
-}
-.buttom {
+
+.button {
     width: 100px;
     height: 30px;
 }
@@ -91,25 +109,42 @@ a:hover {
 .blue {
     background: #1e90ff;
 }
-.width {
-    width: 70%;
-    margin: 0 auto;
-}
+
 .day {
-    background: #a9a9a9;
+    background: #fff;
     height: 50px;
+    
 }
+.day:hover {
+    background: #c0c0c0;
+    color: #fff;
+}
+.dayarea {
+    color: #000000;
+    display: block;
+}
+
 .month {
     color: #0000cd;
 }
 .block {
     display: block;
+    line-height: 1em;
+    width: auto;
+    margin: auto;
+    padding: 15px;
 }
-.tr {
-    border: 1px solid;
-    
+.content {
+    display: flex;
+    width: 800px;
 }
-th,td {
-    text-align: center;
-    padding: 20px;
+.content-right,
+.content-left {
+    width: 50%;
+}
+.wordbreake {
+    word-break: break-all;
+}
+select {
+    width: 100px;
 }

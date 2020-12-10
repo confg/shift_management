@@ -18,7 +18,8 @@ class CreateLeavesTable extends Migration
             $table->integer('user_id');
             $table->date('date');
             $table->integer('leave_reason_master_id');
-            $table->string('text');
+            $table->string('text')->nullable();
+            $table->string('comment')->nullable();
             $table->boolean('permit')->nullable();
             $table->timestamps();
         });

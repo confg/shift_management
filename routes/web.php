@@ -49,7 +49,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     Route::get('bbs/index', 'Users\BbsController@index');
     
-    Route::get('bbs/create', 'Users\BbsController@add');
+    Route::get('bbs/create', 'Users\BbsController@formcreate');
     Route::post('bbs/create', 'Users\BbsController@create');
     
     Route::get('bbs/edit', 'Users\BbsController@edit');
@@ -81,7 +81,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     Route::get('leave/result','Users\LeaveController@result');
     
     Route::post('leave/test','Users\LeaveController@update');
-    
+    Route::get('leave/delete', 'Users\LeaveController@delete');
    
     
 });

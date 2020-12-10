@@ -1,8 +1,7 @@
 body {
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #000;
-  color: #fff;
+  color: #000000;
 }
 
 .navbar-laravel {
@@ -42,5 +41,47 @@ body {
 .widelink {
   display: block;
   padding: 0.6em 1em;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header {
+  background: #343a40;
+  padding-bottom: 50px;
+  margin-bottom: 100px;
+}
+
+.black:hover {
+  background: #6c757d;
+}
+
+.header-left {
+  float: left;
+  display: flex;
+}
+
+.header-right {
+  float: right;
+  list-style: none;
+}
+
+.black,
+.header-right {
+  text-align: center;
+}
+
+.block {
+  display: block;
+  line-height: 1em;
+  width: auto;
+  margin: auto;
+  padding: 15px;
 }
 

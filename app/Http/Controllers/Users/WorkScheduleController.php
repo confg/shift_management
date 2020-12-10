@@ -120,6 +120,7 @@ class WorkScheduleController extends Controller
         $work = Work::all();
         
         
+        
         return view('users.work_schedule.whole', ['date' => $date , 'work' => $work , 'result' => $result]);
     }
     
@@ -140,10 +141,11 @@ class WorkScheduleController extends Controller
         ->whereDate('target_date', $date)
         ->first();
         
+        var_dump($work);
+        
         if($work == null) {
             $work = new Work;
         }
-        
         
         
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
@@ -159,6 +161,16 @@ class WorkScheduleController extends Controller
         if($form['id']) {
             $work = Work::find($request->id);
         }
+        
+        $date_boder = false;
+        
+        if(isset($request['today'])) {
+            $date_boder = true;
+        }elseif (isset($request['next_day'])) {
+            $date_boder = false;
+        }
+        
+        
         
         var_dump($form);
         

@@ -12,10 +12,18 @@
         
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ action('Users\BbsController@add') }}" role="button" class="btn btn-primary">新規作成</a>
+                <a href="{{ action('Users\BbsController@formcreate') }}" role="button" class="btn btn-primary">新規作成</a>
             </div>
             <div class="col-md-8">
-                <form action="{{ action('Users\BbsController@index') }}" method="get">
+                <form action="{{ action('Users\BbsController@index')}}" method="get">
+                      
+                    <div class="form-group row">
+                        <label class="col-md-2">掲載者</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
+                        </div>
+                    </div>
+                    
                     <div class="form-group row">
                         <label class="col-md-2">タイトル</label>
                         <div class="col-md-8">
@@ -26,11 +34,15 @@
                             <input type="submit" class="btn btn-primary" value="検索">
                         </div>
                     </div>
-                    
+                    <select name="sort">
+                        <option value="asc">昇順</option>
+                        <option value="desc">降順</option>
+                    </select>
                 </form>
             </div>
         </div>
         <div>
+            
             <table>
                 <thead>
                     <tr>
@@ -49,10 +61,10 @@
                             
                             <tr>
                                 
-                               <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 30) }}</a></td>
-                               <td>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</td>
-                               <td>{{ \Illuminate\Support\Str::limit(date('Y年m月d日',  strtotime($bbs->posted_at)), 250) }}</td>
-                               <td>{{ \Illuminate\Support\Str::limit($bbs->user->name, 250) }}</td>
+                               <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 20) }}</a></td>
+                               <td>{{ \Illuminate\Support\Str::limit($bbs->body, 20) }}</td>
+                               <td>{{ date('Y年m月d日',  strtotime($bbs->posted_at)) }}</td>
+                               <td>{{ $bbs->user->name }}</td>
                                @can('admin')
                                <td>
                                     <div>
@@ -63,12 +75,13 @@
                                     </div>
                                 </td>
                                 @endcan
-                            </tr>  
+                            </tr>
                             
-                        </div>    
+                        </div>
                     @endforeach
                 </tbody>
             </table>
+            
             <div class="next">
                 {{ $posts->links() }}
             </div>

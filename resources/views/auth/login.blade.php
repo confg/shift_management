@@ -1,16 +1,13 @@
-@extends('layouts.users')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <h2>ログイン</h2>
                 <div class="login-box card">
-                    <div class="login-header card-header mx-auto">{{ __('messages.Login') }}</div>
-                    <div class="form-group row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            <a href="{{ url('/register') }}" class="btn btn-primary">Register</a>
-                        </div>
-                    </div>
+                    <!-- <div class="login-header card-header mx-auto">{{ __('messages.Login') }}</div> -->
+                    <a class="block" href="{{ url('/register') }}">ユーザー新規登録</a>
                     <div class="login-body card-body">
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
@@ -32,7 +29,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('messages.Password') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                    <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback">

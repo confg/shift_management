@@ -2,14 +2,13 @@
 
 @section('content')
 <body>
-    <div class="container">
-        <h1 class="title">休暇申請</h1>
-    </div>
     
     <div class="container">
+        <h1>休暇申請</h1>
+        
         <div>
             <form action="{{ action('Users\LeaveController@application') }}" method="post">
-                <div class="content">
+                <div>
                     <div class="contents">
                         <h4 class="plan-contents">氏名</h4>
                         <div class="plan-contents">
@@ -32,9 +31,9 @@
                     
                     <div class="plan-contents">
                         <h4>備考・理由</h4>
-                        <textarea class="text" name="text"></textarea>
+                        <textarea class="text" maxlength='50' rows="3" name="text"></textarea>
                     </div>
-                    <input class="buttom date" type="submit" value='送信'/>
+                    <input class="button date" type="submit" value='送信'/>
                 </div>
                 {{ csrf_field() }}
             </form>

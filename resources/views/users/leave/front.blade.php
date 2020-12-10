@@ -1,13 +1,16 @@
-@extends('layouts.admin')
+@extends('layouts.work_schedule')
 
 @section('content')
 <body>
+    
     <div class="width">
-        <h1>test</h1>
+        <h1>休暇申請確認</h1>
         <form action="{{ action('Users\LeaveController@update') }}" method="post">
-            <table>
-                <tr class="tr">
-                    <th>氏名</th><td>{{ $tests->user->name }}</td>
+            
+            <table class="table">
+                
+                <tr>
+                    <th class="content-right">氏名</th><td>{{ $tests->user->name }}</td>
                 </tr>
                 <tr>
                     <th>希望日付</th><td>{{ date('Y年m月d日',  strtotime($tests->date)) }}</td>
@@ -19,6 +22,9 @@
                     <th>理由</th><td>{{ $tests->text }}</td>
                 </tr>
                 <tr>
+                    <th>コメント</th><td><textarea name="comment" maxlength='50' rows="3" cols="30" ></textarea></td>
+                </tr>
+                <tr>
                     <th>承認</th>
                     <td>
                 　　      <input type="submit" name="permit" value="承認"/>
@@ -27,7 +33,7 @@
                 </tr>
             　　{{ csrf_field() }}
             　　<input type="hidden" name="id" value="{{ $tests->id }}"/>
-            </table>　　
+            </table>
         </form>
     </div>    
 </body>

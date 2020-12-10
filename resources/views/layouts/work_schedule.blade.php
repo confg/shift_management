@@ -42,7 +42,7 @@
                 <a class="block" href="{{ action('Users\WorkScheduleController@whole') }}">全体の勤務表</a>
             </div>
             <div class="black">
-                <a class="block" href="{{ action('Users\LeaveController@management') }}">休暇申請受け取り先</a>
+                <a class="block" href="{{ action('Users\LeaveController@management') }}">休暇申請の一覧</a>
             </div>
             @endcan
         </div>

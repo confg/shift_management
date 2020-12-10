@@ -3,8 +3,10 @@
 @section('content')
 <body>
     <div>
+        
         <div class="width">
-            <h1>{{ $date }}</h1>
+            <h1>全体の勤務表</h1>
+            <h2>{{ $date }}</h2>
             <form action="{{ action('Users\WorkScheduleController@whole') }}" method="get">
                 <input type="date" name="target_date" value="target_date"/>
                 
@@ -19,7 +21,7 @@
                             <tr>
                                 <th>状態</th>
                                 <th>氏名</th>
-                                <th>出勤時間</th>
+                                <th>出勤予定時間</th>
                                 <th>退社予定時間</th>
                                 <th>出勤</th>
                                 <th>退勤</th>
@@ -36,14 +38,25 @@
                                     <td>勤務時間外</td>
                                 @endif
                              　 <td>{{ $status->username }}</td>
-                                <td>{{ date('H時i分',  strtotime($status->starttime)) }}</td>
-                                <td>{{ date('H時i分',  strtotime($status->endtime)) }}</td>
-                                <td>{{ $status->attendance }}</td>
-                                <td>{{ $status->leaving }}</td>
+                                <td>{{ date('G時i分',  strtotime($status->starttime)) }}</td>
+                                <td>
+                                    @if($status->date_borders == 'next_day')
+                                        {{ config('const.NEXT_DAY') }}
+                                    @endif
+                                    {{ date('G時i分',  strtotime($status->endtime)) }}
+                                    </td>
+                                <td>{{ date('G時i分',  strtotime($status->attendance)) }}</td>
+                                <td>
+                                    @if($status->date_borders == 'next_day')
+                                        {{ config('const.NEXT_DAY') }}
+                                    @endif
+                                    {{ date('G時i分',  strtotime($status->leaving)) }}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

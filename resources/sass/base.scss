@@ -6,6 +6,7 @@ a {
 }
 a:hover {
     color: #c0c0c0;
+    text-decoration: none;
 }
 .content {
     display: flex;
@@ -22,15 +23,20 @@ a:hover {
     list-style: none;
     text-align: center;
 }
-.buttom-bule {
+
+.block {
+    border: 2px solid #000066; 
     background: #4169e1;
     display: block;
-    width: 150px;
+    width: 250px;
     margin: 50px 0;
     padding: 10px;
     text-align: center;
     border-radius: 10px;
+    line-height: 1em;
+    font-size: 20px;
 }
+
 .content-right,
 .content-left {
     width: 50%;
@@ -38,9 +44,17 @@ a:hover {
 
 tr {
     border: 1px solid;
+}
+th {
+    width: 200px;
+    border: 1px solid;
+}
+td {
+    word-break: break-all;
+    width: 300px;
     
 }
 th,td {
     text-align: center;
-    padding: 20px;
+     padding: 20px;
 }

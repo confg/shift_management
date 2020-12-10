@@ -2,25 +2,25 @@
 @section('title', '掲示板タイトル')
 
 @section('content')
-  <div  class="front">
+  <div  class="container">
     <div>
       <div>
         
         <div>
           <h1>名前</h1>
-          <p>{{ \Illuminate\Support\Str::limit($bbs->user->name, 100) }}</p>
+          <h3>{{ $bbs->user->name }}</h3>
         </div>
         
         <hr color="#c0c0c0">
         <div>
           <h1>タイトル</h1>
-          <p>{{ \Illuminate\Support\Str::limit($bbs->title, 100) }}</p>
+          <h3>{{ $bbs->title }}</h3>
         </div>
         
         <hr color="#c0c0c0">
         <div>
           <h1>本文</h1>
-          <p>{{ \Illuminate\Support\Str::limit($bbs->body, 250) }}</p>
+          <h3>{{ $bbs->body }}</h3>
         </div>
         
       </div>

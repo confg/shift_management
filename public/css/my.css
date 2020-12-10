@@ -1,5 +1,11 @@
 body {
   height: auto;
+  margin: 0 auto;
+}
+
+.width {
+  width: 70%;
+  margin: 0 auto;
 }
 
 table {
@@ -12,6 +18,7 @@ table th {
 
 table td {
   background: #90ee90;
+  word-break: break-all;
 }
 
 table th,
@@ -21,12 +28,32 @@ table td {
   padding: 5px;
 }
 
+.table {
+  width: 100%;
+}
+
+.table th {
+  background: #fff;
+}
+
+.table td {
+  background: #fff;
+}
+
+.table th,
+.table td {
+  border: none;
+  text-align: center;
+  margin: 20px 0;
+}
+
 a {
   color: #fff;
 }
 
 a:hover {
   color: #fff;
+  text-decoration: none;
 }
 
 .header {
@@ -35,13 +62,7 @@ a:hover {
   margin-bottom: 100px;
 }
 
-.black {
-  width: auto;
-  margin: auto;
-  padding: 10px;
-}
-
-.black:hover {
+.block:hover {
   background: #6c757d;
 }
 
@@ -66,9 +87,12 @@ a:hover {
   margin: auto;
 }
 
+.next:hover {
+  color: black;
+}
+
 .head,
-.contents,
-.plan {
+.contents {
   display: flex;
 }
 
@@ -85,11 +109,7 @@ a:hover {
   padding: 20px;
 }
 
-.plan-date {
-  margin-left: 200px;
-}
-
-.buttom {
+.button {
   width: 100px;
   height: 30px;
 }
@@ -110,14 +130,19 @@ a:hover {
   background: #1e90ff;
 }
 
-.width {
-  width: 70%;
-  margin: 0 auto;
+.day {
+  background: #fff;
+  height: 50px;
 }
 
-.day {
-  background: #a9a9a9;
-  height: 50px;
+.day:hover {
+  background: #c0c0c0;
+  color: #fff;
+}
+
+.dayarea {
+  color: #000000;
+  display: block;
 }
 
 .month {
@@ -126,15 +151,27 @@ a:hover {
 
 .block {
   display: block;
+  line-height: 1em;
+  width: auto;
+  margin: auto;
+  padding: 15px;
 }
 
-.tr {
-  border: 1px solid;
+.content {
+  display: flex;
+  width: 800px;
 }
 
-th,
-td {
-  text-align: center;
-  padding: 20px;
+.content-right,
+.content-left {
+  width: 50%;
+}
+
+.wordbreake {
+  word-break: break-all;
+}
+
+select {
+  width: 100px;
 }
 
