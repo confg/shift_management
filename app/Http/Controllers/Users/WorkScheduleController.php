@@ -112,7 +112,7 @@ class WorkScheduleController extends Controller
         }
         
         foreach($result as $a) {
-        $a->username = $this->getUserName($a->user_id);
+            $a->username = $this->getUserName($a->user_id);
         }
         //var_dump($uniqueday);
         

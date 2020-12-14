@@ -19,17 +19,19 @@ class LeaveController extends Controller
 {
     
     public function leave(Request $request) {
-        
+        date_default_timezone_set('Asia/Tokyo');
         
         
         $all = LeaveReasonMaster::all();
+        
+        $day = date('Y-m-d');
         
         /*
         ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
         var_dump($all);
         */
         
-        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all]);
+        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all, 'day' => $day ]);
     }
     
     
@@ -38,7 +40,7 @@ class LeaveController extends Controller
         $leave = new Leave;
         $form = $request->all();
         
-        
+        $this->validate($request, Leave::$rules);
         
         //idが渡ってきた前提
         $app = Leave::find($request->id);
@@ -70,22 +72,37 @@ class LeaveController extends Controller
             $manage = Leave::orderBy('id', 'desc')->simplePaginate(10);
         }
         
-        //できない
+        //未返答のデータのみ表示
         $reply = $request->reply;
         if ($reply == 'post' && $sort == 'asc') {
-            $manege = Leave::where('permit', null)
-            ->orderBy('id', 'asc')
+            $manage = Leave::where('permit', null)
+            ->orderBy('created_at', 'asc')
             ->simplePaginate(10);
         }elseif($reply == 'post' && $sort == 'desc') {
-            $manege = Leave::where('permit', null)
-            ->orderBy('id', 'desc')
+            $manage = Leave::where('permit', null)
+            ->orderBy('created_at', 'desc')
             ->simplePaginate(10);
         }
         
-        //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-        var_dump($reply);
+        //名前の検索
+        $cond_name = $request->cond_name;
+        if($sort == 'asc' && $cond_name != '') {
+            $user = User::where('name', $cond_name)->first();
+            $manage = $user->leave()
+            ->orderBy('created_at', 'asc')
+            ->simplePaginate(10);
+        }elseif($sort == 'desc' && $cond_name != '') {
+            $user = User::where('name', $cond_name)->first();
+            $manage = $user->leave()
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate(10);
+        }
+        
+        ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
+        var_dump($sort);
+        var_dump($cond_name);
        
-        return view('users.leave.management', [ 'manage' => $manage]);
+        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name ]);
     }
     
     
@@ -149,7 +166,7 @@ class LeaveController extends Controller
         $manage = Leave::orderBy('id', 'desc')
         ->simplePaginate(10);
         
-        return view('users.leave.management', [ 'manage' => $manage]);
+        return redirect('users/leave/management');
     }
     
     public function delete(Request $request)

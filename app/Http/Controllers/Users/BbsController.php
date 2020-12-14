@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Bbs;
 use App\User;
@@ -97,21 +96,35 @@ class BbsController extends Controller
       }
       */
       
+      //次回詳しく聞く
+      //名前の検索とソート
       $cond_name = $request->cond_name;
       if($sort == 'asc' && $cond_name != '') {
-        $user = User::where('name', $cond_name)->simplePaginate(10);
-        $posts = $user->bbs;
+        $user = User::where('name', $cond_name)->first();
+        $posts = $user->bbs()
+        ->orderBy('posted_at', 'asc')
+        ->simplePaginate(10);
         
       }elseif($sort == 'desc' && $cond_name != '') {
-        $user = User::where('name', $cond_name)->simplePaginate(10);
-        $posts = $user->bbs;
+        $user = User::where('name', $cond_name)->first();
+        $posts = $user->bbs()
+        ->orderBy('posted_at', 'desc')
+        ->simplePaginate(10);
         
       }
       
+      $selected1 = '';
+      $selected2 = '';
+      
+      if($sort == 'asc') {
+        $selected1 = 'selected';
+      } else {
+        $selected2 = 'selected';
+      }
       
       var_dump($sort);
       
-      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name ]);
+      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2 ]);
       
     }
     
@@ -168,16 +181,6 @@ class BbsController extends Controller
       
       
       return view('users.bbs.front', ['bbs' => $bbs]);
-    }
-    
-    //名前をとるメソッド
-    public function getUserName($user_id) {
-      $username = DB::table('users')
-      ->select('name')
-      ->where('id',$user_id)
-      ->get();
-      
-      return $username->name;
     }
     
  }

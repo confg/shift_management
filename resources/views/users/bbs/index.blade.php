@@ -35,9 +35,8 @@
                         </div>
                     </div>
                     <select name="sort">
-                        <option value="">---</option>
-                        <option value="asc">昇順</option>
-                        <option value="desc">降順</option>
+                        <option value="asc" {{ $selected1 }}>昇順</option>
+                        <option value="desc" {{ $selected2 }} >降順</option>
                     </select>
                 </form>
             </div>

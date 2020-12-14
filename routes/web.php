@@ -78,9 +78,10 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
     
+    
     Route::get('leave/result','Users\LeaveController@result');
     
-    Route::post('leave/test','Users\LeaveController@update');
+    Route::post('leave/update','Users\LeaveController@update');
     Route::get('leave/delete', 'Users\LeaveController@delete');
    
     

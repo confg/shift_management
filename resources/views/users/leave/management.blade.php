@@ -18,6 +18,7 @@
                     <option value="post">未返答</option>
                 </select>
                 
+                <input type="text" name="cond_name" value={{ $cond_name }}>
                 
                 <div class="col-md-2">
                     {{ csrf_field() }}
@@ -28,9 +29,9 @@
         </form>
         <table>
             <tr>
-                <th width="20%" >氏名</th>
-                <th width="20%" >希望日付</th>
-                <th width="10%" >有給・その他</th>
+                <th width="20%">氏名</th>
+                <th width="20%">希望日付</th>
+                <th width="10%">有給・その他</th>
                 <th>備考・理由</th>
                 <th>返答済み</th>
             </tr>
@@ -54,7 +55,7 @@
             @endforeach
         </table>
         <div class="next">
-            {{ $manage->links() }}
+            {{ $manage->appends(request()->query())->links() }}
         </div>
     </div>
 </body>

@@ -35,11 +35,11 @@
                         <tr>
                             <div class="contents">
                                 <td>
-                                    <h5>予定出勤時間</h5>
+                                    <h5>出勤予定時間</h5>
                                     <input class="button" type="time" min="0:00" max="23:59" required name="starttime" value="{{ old('starttime') }}">
                                 </td>
                                 <td>
-                                    <h5>予定退勤時間</h5>
+                                    <h5>退勤予定時間</h5>
                                     <input class="button" type="time" min="0:00" max="23:59" required name="endtime" value="{{ old('endtime') }}">
                                 </td>
                                 <td>

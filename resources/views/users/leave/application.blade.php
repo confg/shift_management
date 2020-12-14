@@ -12,7 +12,7 @@
                     <div class="contents">
                         <h4 class="plan-contents">氏名</h4>
                         <div class="plan-contents">
-                            {{ $user }}
+                            <h4>{{ $user }}</h4>
                         </div>
                     </div>
                     
@@ -21,6 +21,13 @@
                         <div>
                             <input class="date" type="date" name="date" min="2020-01-01" max="2030-01-01" required/>
                         </div>
+                        @if (count($errors) > 0)
+                            <ul>
+                                @foreach($errors->all() as $e)
+                                    <li>{{ $e }}</li>
+                                @endforeach
+                            </ul>
+                    @endif
                     </div>
                     
                     <div  class="plan-contents">
@@ -35,6 +42,7 @@
                     </div>
                     <input class="button date" type="submit" value='送信'/>
                 </div>
+                <input type="hidden" name="day" value="{{ $day }}"/>
                 {{ csrf_field() }}
             </form>
         </div>
