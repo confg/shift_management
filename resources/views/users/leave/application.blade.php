@@ -42,7 +42,7 @@
                     </div>
                     <input class="button date" type="submit" value='送信'/>
                 </div>
-                <input type="hidden" name="day" value="{{ $day }}"/>
+                
                 {{ csrf_field() }}
             </form>
         </div>

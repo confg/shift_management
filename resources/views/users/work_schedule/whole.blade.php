@@ -48,7 +48,7 @@
                                 <td>{{ date('G時i分',  strtotime($status->attendance)) }}</td>
                                 <td>
                                     @if($status->date_borders == 'next_day')
-                                        {{ config('const.NEXT_DAY') }}
+                                        
                                     @endif
                                     {{ date('G時i分',  strtotime($status->leaving)) }}
                                 </td>

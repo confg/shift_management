@@ -12,19 +12,9 @@ class Leave extends Model
     
     
     public static $rules = array(
-      'date' => 'after:day'
+      'date' => 'after:today'
       
     );
-    
-    
-    
-    
-    public function messages()  {
-      return [
-        'date.after:today' => '希望日付は現在日付より後の日付を入力してください。'
-      ];
-    }
-    
     
     
     public function user()

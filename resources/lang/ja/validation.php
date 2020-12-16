@@ -15,9 +15,7 @@ return [
 
     'accepted' => ':attributeを承認してください。',
     'active_url' => ':attributeに正しいURLを入力してください。',
-    
     'after' => ':attributeは:dateより先の日付を入力してください。',
-    
     'after_or_equal' => ':attributeは:date以降の日付を入力してください。',
     'alpha' => ':attributeは英字で入力してください。',
     'alpha_dash' => ':attributeは英数字とハイフン、アンダーバーのみで入力してください。',
@@ -118,6 +116,7 @@ return [
     'uploaded' => ':attributeはアップロードに失敗しました。',
     'url' => ':attributeを正しいURLで入力してください。',
     'uuid' => ':attributeを正しいUUIDで入力してください。',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -129,15 +128,16 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
+    
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
             
         ],
         'date' => [
-            'after:today' => '希望日付は現在日付より後の日付を入力してください。',
-        ]
+            'after' => ':attributeは現在の日付より後の日付を入力してください',
+            'today' => ':attributeは現在の日付より後の日付を入力してください',
+        ],
         
     ],
 
@@ -158,6 +158,7 @@ return [
         'title' => 'タイトル',
         'body' => '本文',
         'date' => '希望日付',
+        'name' => '名前'
         
     ],
     

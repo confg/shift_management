@@ -24,14 +24,13 @@ class LeaveController extends Controller
         
         $all = LeaveReasonMaster::all();
         
-        $day = date('Y-m-d');
         
         /*
         ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
         var_dump($all);
         */
         
-        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all, 'day' => $day ]);
+        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all ]);
     }
     
     
