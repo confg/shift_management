@@ -23,9 +23,11 @@
                                 @if( date("Y-m-j") == $date && $work->leaving == '00:00:00')
                                     @if($work->attendance == '00:00:00')
                                         <input class="button" type="submit" name="attendance" value="出勤"/>
-                                    @else
-                                        <input class="button" type="submit" name="leaving" value="退勤"/>
                                     @endif
+                                @endif
+                                @if($work->attendance != '00:00:00' && $work->leaving == '00:00:00')
+                                    <input type="hidden" name="leaving_date">
+                                    <input class="button" type="submit" name="leaving" value="退勤"/>
                                 @endif
                             </form>
                         </td>

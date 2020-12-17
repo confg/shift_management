@@ -52,7 +52,7 @@ class LeaveController extends Controller
         $leave->save();
         
         
-        return redirect('users/mypege');
+        return redirect('users/mypage');
     }
     
     
@@ -97,11 +97,25 @@ class LeaveController extends Controller
             ->simplePaginate(10);
         }
         
+        $selected1 = '';
+        $selected2 = '';
+        
+        if($sort == 'asc') {
+            $selected1 = 'selected';
+        } else {
+            $selected2 = 'selected';
+        }
+        
+        $selected3 = '';
+        if($reply == 'post') {
+            $selected3 = 'selected';
+        }
+        
         ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
         var_dump($sort);
         var_dump($cond_name);
        
-        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name ]);
+        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2, 'selected3' => $selected3 ]);
     }
     
     

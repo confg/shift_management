@@ -27,7 +27,7 @@
                                     <li>{{ $e }}</li>
                                 @endforeach
                             </ul>
-                    @endif
+                        @endif
                     </div>
                     
                     <div  class="plan-contents">

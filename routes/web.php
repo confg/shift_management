@@ -41,7 +41,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth', 'can:admin']], funct
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     
     
-    Route::get('mypege','Users\UserController@add');
+    Route::get('mypage','Users\UserController@add');
     
     
     

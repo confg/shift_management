@@ -59,6 +59,46 @@ class BbsController extends Controller
     
     public function index(Request $request) {
       
+      $sort = $request->sort;
+      $posts = Bbs::orderBy('id', $sort)->simplePaginate(10);
+      
+      
+      $cond_title = $request->cond_title;
+      if($cond_title != '') {
+        $posts = Bbs::where('title', $cond_title)
+        ->orderBy('posted_at', $sort)
+        ->simplePaginate(10);
+      }
+      
+      $cond_name = $request->cond_name;
+      if($cond_name != '') {
+        $user = User::where('name', $cond_name)->first();
+        $posts = $user->bbs()
+        ->orderBy('posted_at', $sort)
+        ->simplePaginate(10);
+      }
+      
+      
+      
+      if($cond_name != '' && $cond_title != '') {
+        $title = Bbs::where('title', $cond_title)
+        ->orderBy('posted_at', $sort)
+        ->simplePaginate(10);
+        $user = User::where('name', $cond_name)->first();
+        $name = $user->bbs()
+        ->orderBy('posted_at', $sort)
+        ->simplePaginate(10);
+        
+        if($title && $name) {
+          $name = $name->id;
+          $title = $title->id;
+          
+          $posts = User::where('id',$user)->where('user_id',$title)->orderBy('posted_at',$sort)->paginate(10);
+        }
+      }
+      
+      
+      /*
       $posts = Bbs::orderBy('id', 'desc')->simplePaginate(10);
       
       //掲載者のソート機能
@@ -68,9 +108,9 @@ class BbsController extends Controller
       }elseif($sort == 'desc') {
         $posts = Bbs::orderBy('posted_at', 'desc')->simplePaginate(10);
       }
+      */
       
-      
-      $cond_title = $request->cond_title;
+      /*タイトル検索
       if($sort == 'asc' && $cond_title != '') {
         $posts = Bbs::where('title', $cond_title)
         ->orderBy('posted_at', 'asc')
@@ -80,25 +120,12 @@ class BbsController extends Controller
         ->orderBy('posted_at', 'desc')
         ->simplePaginate(10);
       }
-      
-      
-      /*
-      //名前の検索がuser_idだったらできる状態
-      $cond_name = $request->cond_name;
-      if($sort == 'asc' && $cond_name != '') {
-        $posts = Bbs::where('user_id', $cond_name)
-        ->orderBy('posted_at', 'asc')
-        ->simplePaginate(10);
-      }elseif($sort == 'desc' && $cond_name != '') {
-        $posts = Bbs::where('user_id', $cond_name)
-        ->orderBy('posted_at', 'desc')
-        ->simplePaginate(10);
-      }
       */
       
-      //次回詳しく聞く
-      //名前の検索とソート
-      $cond_name = $request->cond_name;
+      
+      
+      
+      /*名前の検索とソート
       if($sort == 'asc' && $cond_name != '') {
         $user = User::where('name', $cond_name)->first();
         $posts = $user->bbs()
@@ -112,6 +139,7 @@ class BbsController extends Controller
         ->simplePaginate(10);
         
       }
+      */
       
       $selected1 = '';
       $selected2 = '';
@@ -122,7 +150,7 @@ class BbsController extends Controller
         $selected2 = 'selected';
       }
       
-      var_dump($sort);
+      var_dump($posts);
       
       return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2 ]);
       

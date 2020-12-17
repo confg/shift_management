@@ -147,8 +147,7 @@ class WorkScheduleController extends Controller
             $work = new Work;
         }
         
-        
-        
+       
         
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
     }
@@ -157,6 +156,9 @@ class WorkScheduleController extends Controller
         
         $work = new Work;
         $form = $request->all();
+        
+        $starttime = $request->strattime;
+        $endtime = $request->endtime;
         
         //$formにworksテーブルのidがあれば更新
         //ifが更新
@@ -171,7 +173,6 @@ class WorkScheduleController extends Controller
         }elseif (isset($request['next_day'])) {
             $date_boder = false;
         }
-        
         
         
         var_dump($form);
@@ -270,7 +271,6 @@ class WorkScheduleController extends Controller
         
         $work = new Work;
         
-        
         //updateのなかの連想配列をif文の中で分岐させる
         //からの配列を忘れずに
         $test = array();
@@ -278,7 +278,10 @@ class WorkScheduleController extends Controller
         if(isset($request['attendance'])) {
             $test = ['attendance' => $work->attendance = date("H:i:s")];
         }elseif(isset($request['leaving'])) {
-            $test = ['leaving' => $work->leaving = date("H:i:s")];
+            $test = [
+            'leaving' => $work->leaving = date("H:i:s"),
+            'leaving_date' => $work->leaving_date = date("Y-m-d"),
+            ];
         }
         
         
@@ -286,7 +289,6 @@ class WorkScheduleController extends Controller
         DB::table('works')
         ->where('id', $request->id)
         ->update($test);
-        
         
         
         return $this->add();

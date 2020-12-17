@@ -16,7 +16,6 @@
             </div>
             <div class="col-md-8">
                 <form action="{{ action('Users\BbsController@index')}}" method="get">
-                      
                     <div class="form-group row">
                         <label class="col-md-2">掲載者</label>
                         <div class="col-md-4">
@@ -83,7 +82,7 @@
             </table>
             
             <div class="next">
-                {{ $posts->links() }}
+                {{ $posts->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

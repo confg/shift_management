@@ -9,10 +9,10 @@
             <h2>{{ $date }}</h2>
             <form action="{{ action('Users\WorkScheduleController@whole') }}" method="get">
                 <input type="date" name="target_date" value="target_date"/>
-                
                 <input type="submit" value="送信"/>
                 {{ csrf_field() }}
             </form>
+            
             <div>
                 <div>
                     <table>
@@ -47,8 +47,8 @@
                                     </td>
                                 <td>{{ date('G時i分',  strtotime($status->attendance)) }}</td>
                                 <td>
-                                    @if($status->date_borders == 'next_day')
-                                        
+                                    @if(date("Y-m-d",strtotime($date)) < $status->leaving_date )
+                                        {{ config('const.NEXT_DAY') }}
                                     @endif
                                     {{ date('G時i分',  strtotime($status->leaving)) }}
                                 </td>

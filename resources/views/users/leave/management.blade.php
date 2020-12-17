@@ -5,21 +5,27 @@
     <div class="width">
         <h1>休暇申請の一覧</h1>
         <form action="{{ action('Users\LeaveController@management') }}" method="get">
+            
             <div class="form-group row">
+                <label class="col-md-2">氏名</label>
+                <div class="col-md-4">
+                    <input type="text" name="cond_name" value={{ $cond_name }}>
+                </div>
                 
-                
-                <select name="sort">
-                    <option value="asc">昇順</option>
-                    <option value="desc">降順</option>
-                </select>
-                
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-md-2">未返答の検索</label>
                 <select name="reply">
                     <option value="">---</option>
-                    <option value="post">未返答</option>
+                    <option value="post" {{ $selected3 }}>未返答</option>
                 </select>
-                
-                <input type="text" name="cond_name" value={{ $cond_name }}>
-                
+            </div>
+            <div class="form-group row">
+                <select name="sort">
+                    <option value="asc" {{ $selected1 }}>昇順</option>
+                    <option value="desc" {{ $selected2 }}>降順</option>
+                </select>
                 <div class="col-md-2">
                     {{ csrf_field() }}
                     <input type="submit" class="btn btn-primary" value="検索">
@@ -31,7 +37,7 @@
             <tr>
                 <th width="20%">氏名</th>
                 <th width="20%">希望日付</th>
-                <th width="10%">有給・その他</th>
+                <th width="20%">有給・その他</th>
                 <th>備考・理由</th>
                 <th>返答済み</th>
             </tr>

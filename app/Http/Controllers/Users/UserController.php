@@ -21,6 +21,6 @@ class UserController extends Controller
         
         //var_dump($user);
         
-        return view('users.mypege', [ 'user' => $user ]);
+        return view('users.mypage', [ 'user' => $user ]);
     }
 }
