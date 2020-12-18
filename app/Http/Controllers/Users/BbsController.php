@@ -79,24 +79,15 @@ class BbsController extends Controller
       }
       
       
-      
-      if($cond_name != '' && $cond_title != '') {
-        $title = Bbs::where('title', $cond_title)
-        ->orderBy('posted_at', $sort)
-        ->simplePaginate(10);
-        $user = User::where('name', $cond_name)->first();
-        $name = $user->bbs()
-        ->orderBy('posted_at', $sort)
-        ->simplePaginate(10);
+      //すごく苦労した
+      if($cond_title != '' && $cond_name != '') {
         
-        if($title && $name) {
-          $name = $name->id;
-          $title = $title->id;
-          
-          $posts = User::where('id',$user)->where('user_id',$title)->orderBy('posted_at',$sort)->paginate(10);
-        }
+        $user = User::where('name', $cond_name)->first();
+        
+        $posts = Bbs::where('user_id', $user->id)
+        ->where('title', $cond_title)
+        ->simplePaginate(10);
       }
-      
       
       /*
       $posts = Bbs::orderBy('id', 'desc')->simplePaginate(10);
@@ -150,7 +141,6 @@ class BbsController extends Controller
         $selected2 = 'selected';
       }
       
-      var_dump($posts);
       
       return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2 ]);
       

@@ -59,17 +59,19 @@ class LeaveController extends Controller
     
     public function management(Request $request){
         
-        
-        $manage = Leave::orderBy('id', 'desc')
+        $sort = $request->sort;
+        $manage = Leave::orderBy('created_at', $sort)
         ->simplePaginate(10);
         
+        /*
         //ソート機能
-        $sort = $request->sort;
+        
         if ($sort == 'asc') {
             $manage = Leave::orderBy('id', 'asc')->simplePaginate(10);
         }elseif($sort == 'desc') {
             $manage = Leave::orderBy('id', 'desc')->simplePaginate(10);
         }
+        */
         
         //未返答のデータのみ表示
         $reply = $request->reply;
