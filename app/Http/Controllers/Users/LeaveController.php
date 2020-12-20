@@ -60,44 +60,48 @@ class LeaveController extends Controller
     public function management(Request $request){
         
         $sort = $request->sort;
-        $manage = Leave::orderBy('created_at', $sort)
-        ->simplePaginate(10);
-        
-        /*
-        //ソート機能
-        
-        if ($sort == 'asc') {
-            $manage = Leave::orderBy('id', 'asc')->simplePaginate(10);
-        }elseif($sort == 'desc') {
-            $manage = Leave::orderBy('id', 'desc')->simplePaginate(10);
-        }
-        */
-        
-        //未返答のデータのみ表示
         $reply = $request->reply;
+        $cond_name = $request->cond_name;
+        
+        if($reply == '' && $cond_name == '') {
+            $manage = Leave::orderBy('created_at', $sort)
+            ->simplePaginate(10);
+        }
+        
+        
+        
         if ($reply == 'post' && $sort == 'asc') {
             $manage = Leave::where('permit', null)
-            ->orderBy('created_at', 'asc')
-            ->simplePaginate(10);
-        }elseif($reply == 'post' && $sort == 'desc') {
-            $manage = Leave::where('permit', null)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', $sort)
             ->simplePaginate(10);
         }
         
-        //名前の検索
-        $cond_name = $request->cond_name;
-        if($sort == 'asc' && $cond_name != '') {
-            $user = User::where('name', $cond_name)->first();
-            $manage = $user->leave()
-            ->orderBy('created_at', 'asc')
-            ->simplePaginate(10);
-        }elseif($sort == 'desc' && $cond_name != '') {
-            $user = User::where('name', $cond_name)->first();
-            $manage = $user->leave()
-            ->orderBy('created_at', 'desc')
-            ->simplePaginate(10);
+        
+        $user = User::where('name', $cond_name)->first();
+        
+        if($cond_name != '') {
+            
+            if(is_null($user)) {
+                $manage = Leave::where('id', null)
+                ->simplePaginate(10);
+            } else {
+                $manage = $user->leave()
+                ->orderBy('created_at', $sort)
+                ->simplePaginate(10);
+            }
         }
+        
+        if($reply == 'post' && $cond_name != '') {
+            if(is_null($user)) {
+              $manage = Leave::where('id', null)->simplePaginate(10);
+            } else {
+              $manage = Leave::where('user_id', $user->id)
+              ->where('permit', null)
+              ->orderBy('created_at', $sort)
+              ->simplePaginate(10);
+            }
+        }
+       
         
         $selected1 = '';
         $selected2 = '';
@@ -170,13 +174,10 @@ class LeaveController extends Controller
         
         DB::table('leaves')
         ->where('id', $request->id)
-        ->update(['permit' => $permitFlg]);
-        
-        
-        DB::table('leaves')
-        ->where('id', $request->id)
-        ->update(['comment' => $request->comment]);
-        
+        ->update([
+            'permit' => $permitFlg,
+            'comment' => $request->comment
+        ]);
         
         $manage = Leave::orderBy('id', 'desc')
         ->simplePaginate(10);

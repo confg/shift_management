@@ -9,7 +9,10 @@
             <h2>{{ $date }}</h2>
             <form action="{{ action('Users\WorkScheduleController@whole') }}" method="get">
                 <input type="date" name="target_date" value="target_date"/>
+                
+                
                 <input type="submit" value="送信"/>
+                
                 {{ csrf_field() }}
             </form>
             

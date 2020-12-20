@@ -25,34 +25,23 @@ class WorkScheduleController extends Controller
         $month = date('m');
         $intmonth = intval($month);
         
-        
-        
-    
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($year,$month), 'currentMonth' => $intmonth, 'currentYear' => $intyear]);
     }
     
     public function monthmove(Request $request) {
         
-        
         $now = new \DateTime();
-        
         
         $currentYear = $request->input('currentYear');
         $currentMonth = $request->input('currentMonth');
         $zenngetu = $request->input('mode');
         
-        
         $now->setdate($currentYear,$currentMonth,1);
-        
         
         //modeに+1と-1の値を与える、リクエストで受け取る、modify()の引数の中に変数と文字列で結合する
         
         $now->modify($zenngetu.' month');
         
-        //var_dump($zenngetu);
-        
-        
-
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($now->format('Y'), $now->format('m')), 'currentMonth' => $now->format('m'), 'currentYear' => $now->format('Y')]);
     }
     
@@ -68,9 +57,6 @@ class WorkScheduleController extends Controller
         return $username->name;
     }
     
-    
-    
-    
     public function whole(Request $request) {
         date_default_timezone_set('Asia/Tokyo');
         
@@ -83,9 +69,6 @@ class WorkScheduleController extends Controller
             $date = date('m月j日',strtotime($request->target_date));
         }
         
-        
-        
-        
         //user_idの重複をのぞくtarget_dateの一番大きい値の検索
         
         $uniqueday = DB::table('works')
@@ -93,8 +76,6 @@ class WorkScheduleController extends Controller
         ->whereDate('target_date', $sample)
         ->groupBy('user_id')
         ->get();
-        
-        
         
         $result = array();
         
@@ -133,21 +114,14 @@ class WorkScheduleController extends Controller
         
         $date = $year.'-'.$month.'-'.$day;
         
-        
-        
-        
         $work = DB::table('works')
         ->where('user_id', Auth::id())
         ->whereDate('target_date', $date)
         ->first();
         
-        var_dump($work);
-        
         if($work == null) {
             $work = new Work;
         }
-        
-       
         
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
     }
@@ -156,6 +130,8 @@ class WorkScheduleController extends Controller
         
         $work = new Work;
         $form = $request->all();
+        
+        $this->validate($request, Work::$rules);
         
         $starttime = $request->strattime;
         $endtime = $request->endtime;
@@ -174,9 +150,6 @@ class WorkScheduleController extends Controller
             $date_boder = false;
         }
         
-        
-        var_dump($form);
-        
         $work->fill($form);
         $work->user_id = Auth::id();
         $work->save();
@@ -188,13 +161,6 @@ class WorkScheduleController extends Controller
     
     //外からきた変数で使える状態に
     public function CalendarTest($year,$month) {
-        // 現在の年月を取得
-        
-        
-        //$year = date('Y');
-        //$month = date('n');
-        
-        
         
         // 月末日を取得
         $last_day = date('j', mktime(0, 0, 0, $month + 1, 0, $year));
@@ -210,16 +176,14 @@ class WorkScheduleController extends Controller
          
             // 1日の場合
             if ($i == 1) {
-         
-                // 1日目の曜日までをループ
+                
+                // 1日目の��日までをループ
                 for ($s = 1; $s <= $week; $s++) {
-         
+                    
                     // 前半に空文字をセット
                     $calendar[$j]['day'] = '';
                     $j++;
-         
                 }
-         
             }
          
             // 配列に日付をセッ��
@@ -235,16 +199,11 @@ class WorkScheduleController extends Controller
                     // 後半に空文字をセット
                     $calendar[$j]['day'] = '';
                     $j++;
-         
                 }
-         
             }
-         
         }
         return $calendar;
     }
-    
-    
     
     public function getCalendarDates($year, $month)
     {
@@ -284,16 +243,11 @@ class WorkScheduleController extends Controller
             ];
         }
         
-        
-        
         DB::table('works')
         ->where('id', $request->id)
         ->update($test);
         
-        
         return $this->add();
-        
     }
-    
     
 }

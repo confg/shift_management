@@ -33,21 +33,19 @@ class BbsController extends Controller
         $path = $request->file('image')->store('public/image');
         $bbs->image_path = basename($path);
       } else {
-          $bbs->image_path = null;
+        $bbs->image_path = null;
       }
       
       unset($form['_token']);
       
       unset($form['image']);
       
-      
       $bbs->posted_at = Carbon::now();
-      
       
       $bbs->user_id = Auth::id();
       
-      
       $bbs->fill($form);
+      
       $bbs->save();
       
       
@@ -60,77 +58,41 @@ class BbsController extends Controller
     public function index(Request $request) {
       
       $sort = $request->sort;
-      $posts = Bbs::orderBy('id', $sort)->simplePaginate(10);
-      
-      
       $cond_title = $request->cond_title;
-      if($cond_title != '') {
-        $posts = Bbs::where('title', $cond_title)
-        ->orderBy('posted_at', $sort)
-        ->simplePaginate(10);
-      }
-      
       $cond_name = $request->cond_name;
-      if($cond_name != '') {
-        $user = User::where('name', $cond_name)->first();
-        $posts = $user->bbs()
+      
+      if($cond_title == '' && $cond_name == '') {
+        $posts = Bbs::orderBy('posted_at', $sort)->simplePaginate(10);
+      }
+      
+      if($cond_title != '') {
+        $posts = Bbs::where('title','like','%'.$cond_title.'%')
         ->orderBy('posted_at', $sort)
         ->simplePaginate(10);
       }
       
+      $user = User::where('name','like','%'.$cond_name.'%')->first();
       
-      //すごく苦労した
+      if($cond_name != '') {
+        if (is_null($user)){
+          $posts = Bbs::where('id', null)->simplePaginate(10);
+        } else {
+          $posts = $user->bbs()
+          ->orderBy('posted_at', $sort)
+          ->simplePaginate(10);
+        }
+      }
+      
       if($cond_title != '' && $cond_name != '') {
-        
-        $user = User::where('name', $cond_name)->first();
-        
-        $posts = Bbs::where('user_id', $user->id)
-        ->where('title', $cond_title)
-        ->simplePaginate(10);
+        if(is_null($user)) {
+          $posts = Bbs::where('id', null)->simplePaginate(10);
+        } else {
+          $posts = Bbs::where('user_id', $user->id)
+          ->where('title','like','%'.$cond_title.'%')
+          ->orderBy('posted_at', $sort)
+          ->simplePaginate(10);
+        }
       }
-      
-      /*
-      $posts = Bbs::orderBy('id', 'desc')->simplePaginate(10);
-      
-      //掲載者のソート機能
-      $sort = $request->sort;
-      if ($sort == 'asc') {
-        $posts = Bbs::orderBy('posted_at', 'asc')->simplePaginate(10);
-      }elseif($sort == 'desc') {
-        $posts = Bbs::orderBy('posted_at', 'desc')->simplePaginate(10);
-      }
-      */
-      
-      /*タイトル検索
-      if($sort == 'asc' && $cond_title != '') {
-        $posts = Bbs::where('title', $cond_title)
-        ->orderBy('posted_at', 'asc')
-        ->simplePaginate(10);
-      }elseif($sort == 'desc' && $cond_title != '') {
-        $posts = Bbs::where('title', $cond_title)
-        ->orderBy('posted_at', 'desc')
-        ->simplePaginate(10);
-      }
-      */
-      
-      
-      
-      
-      /*名前の検索とソート
-      if($sort == 'asc' && $cond_name != '') {
-        $user = User::where('name', $cond_name)->first();
-        $posts = $user->bbs()
-        ->orderBy('posted_at', 'asc')
-        ->simplePaginate(10);
-        
-      }elseif($sort == 'desc' && $cond_name != '') {
-        $user = User::where('name', $cond_name)->first();
-        $posts = $user->bbs()
-        ->orderBy('posted_at', 'desc')
-        ->simplePaginate(10);
-        
-      }
-      */
       
       $selected1 = '';
       $selected2 = '';
@@ -140,7 +102,6 @@ class BbsController extends Controller
       } else {
         $selected2 = 'selected';
       }
-      
       
       return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2 ]);
       

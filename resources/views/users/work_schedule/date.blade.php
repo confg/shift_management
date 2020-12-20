@@ -44,6 +44,7 @@
                                     <h5>退勤予定時間</h5>
                                     <input class="button" type="time" min="0:00" max="23:59" required name="endtime" value="{{ old('endtime') }}">
                                 </td>
+
                                 <td>
                                     <select name="date_borders">
                                         <option value='today'>{{ config('const.TODAY') }}</option>
@@ -52,6 +53,7 @@
                                 </td>
                             </div>
                         </tr>
+                        
                         <tr>
                             @if( $work->starttime == null )
                                 <td>
@@ -64,6 +66,15 @@
                                 </td>
                             @endif
                         </tr>
+                        <tr>
+                            @if (count($errors) > 0)
+                                <ul>
+                                    @foreach($errors->all() as $e)
+                                        <li>{{ $e }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </tr>
                         @if ( $work != null )
                             <input type="hidden" name="id" value="{{ $work->id }}">
                         @else
@@ -73,6 +84,7 @@
                         {{ csrf_field() }}
                     </form>
                 </table>
+                
             </div>
             <div class="content-right">
                 <table class="table">

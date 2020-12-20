@@ -31,7 +31,6 @@
                     <input type="submit" class="btn btn-primary" value="検索">
                 </div>
             </div>
-            
         </form>
         <table>
             <tr>
