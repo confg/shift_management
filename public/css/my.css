@@ -175,3 +175,15 @@ select {
   width: 100px;
 }
 
+.select-box {
+  margin: 0 15px;
+}
+
+.select-box-right {
+  margin-left: 100px;
+}
+
+.wrap {
+  margin-top: 30px;
+}
+

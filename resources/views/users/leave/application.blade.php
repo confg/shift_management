@@ -42,7 +42,6 @@
                     </div>
                     <input class="button date" type="submit" value='送信'/>
                 </div>
-                
                 {{ csrf_field() }}
             </form>
         </div>

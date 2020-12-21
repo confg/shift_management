@@ -95,12 +95,8 @@ class WorkScheduleController extends Controller
         foreach($result as $a) {
             $a->username = $this->getUserName($a->user_id);
         }
-        //var_dump($uniqueday);
-        
         
         $work = Work::all();
-        
-        
         
         return view('users.work_schedule.whole', ['date' => $date , 'work' => $work , 'result' => $result]);
     }
@@ -153,7 +149,7 @@ class WorkScheduleController extends Controller
         $work->fill($form);
         $work->user_id = Auth::id();
         $work->save();
-        
+       
         return redirect('users/work_schedule/my');
     }
     

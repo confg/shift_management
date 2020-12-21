@@ -19,8 +19,6 @@ class UserController extends Controller
         ->where('id', Auth::id())
         ->first();
         
-        //var_dump($user);
-        
-        return view('users.mypage', [ 'user' => $user ]);
+        return view('users.mypage', [ 'user' => $user, ]);
     }
 }

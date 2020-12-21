@@ -21,36 +21,36 @@ class LeaveController extends Controller
     public function leave(Request $request) {
         date_default_timezone_set('Asia/Tokyo');
         
-        
         $all = LeaveReasonMaster::all();
         
+        //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
         
-        /*
-        ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-        var_dump($all);
-        */
-        
-        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all ]);
+        return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all]);
     }
     
     
     public function application(Request $request) {
         
         $leave = new Leave;
+        $update = $request->date;
         $form = $request->all();
         
+        //ログインユーザーの希望日付のリクエストのID
+        $target = DB::table('leaves')
+        ->where('date',$update)
+        ->where('user_id',Auth::id())
+        ->first();
+        
+        if($target != null) {
+            $leave = Leave::find($target->id);
+        }
+        
+        
         $this->validate($request, Leave::$rules);
-        
-        //idが渡ってきた前提
-        $app = Leave::find($request->id);
-        
-        
-        
         
         $leave->fill($form);
         $leave->user_id = Auth::id();
         $leave->save();
-        
         
         return redirect('users/mypage');
     }
@@ -68,16 +68,13 @@ class LeaveController extends Controller
             ->simplePaginate(10);
         }
         
-        
-        
         if ($reply == 'post' && $sort == 'asc') {
             $manage = Leave::where('permit', null)
             ->orderBy('created_at', $sort)
             ->simplePaginate(10);
         }
         
-        
-        $user = User::where('name', $cond_name)->first();
+        $user = User::where('name','like','%'.$cond_name.'%')->first();
         
         if($cond_name != '') {
             
@@ -101,7 +98,6 @@ class LeaveController extends Controller
               ->simplePaginate(10);
             }
         }
-       
         
         $selected1 = '';
         $selected2 = '';
@@ -117,9 +113,6 @@ class LeaveController extends Controller
             $selected3 = 'selected';
         }
         
-        ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-        var_dump($sort);
-        var_dump($cond_name);
        
         return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2, 'selected3' => $selected3 ]);
     }
@@ -127,11 +120,7 @@ class LeaveController extends Controller
     
     public function front(Request $request) {
         
-        
-        
         $tests = Leave::find($request->id);
-        
-        var_dump($tests);
         
         return view('users.leave.front', [ 'tests' => $tests]);
     }
@@ -147,6 +136,7 @@ class LeaveController extends Controller
     }
     
     public function getUserName($user_id) {
+        
         $username = DB::table('users')
         ->select('name')
         ->where('id',$user_id)
@@ -170,8 +160,6 @@ class LeaveController extends Controller
             $permitFlg = false;
         }
         
-        
-        
         DB::table('leaves')
         ->where('id', $request->id)
         ->update([
@@ -183,15 +171,5 @@ class LeaveController extends Controller
         ->simplePaginate(10);
         
         return redirect('users/leave/management');
-    }
-    
-    public function delete(Request $request)
-    {
-      
-      $leave = Leave::find($request->id);
-      
-      $leave->delete();
-      
-      return redirect('users/leave/result');
     }
 }

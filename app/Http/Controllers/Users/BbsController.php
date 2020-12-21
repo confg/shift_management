@@ -29,17 +29,6 @@ class BbsController extends Controller
       $form = $request->all();
       
       
-      if (isset($form['image'])) {
-        $path = $request->file('image')->store('public/image');
-        $bbs->image_path = basename($path);
-      } else {
-        $bbs->image_path = null;
-      }
-      
-      unset($form['_token']);
-      
-      unset($form['image']);
-      
       $bbs->posted_at = Carbon::now();
       
       $bbs->user_id = Auth::id();
@@ -112,7 +101,7 @@ class BbsController extends Controller
       
       $bbs = Bbs::find($request->id);
       if (empty($bbs)) {
-        abort(404);    
+        abort(404);
       }
       return view('users.bbs.edit', ['bbs_form' => $bbs]);
     }
@@ -120,23 +109,12 @@ class BbsController extends Controller
     public function update(Request $request) {
       
       $this->validate($request, Bbs::$rules);
-
+      
       $bbs = Bbs::find($request->id);
-
+      
       $bbs_form = $request->all();
-      if (isset($bbs_form['image'])) {
-        $path = $request->file('image')->store('public/image');
-        $bbs->image_path = basename($path);
-        unset($bbs_form['image']);
-      } elseif (isset($request->remove)) {
-        $bbs->image_path = null;
-        unset($bbs_form['remove']);
-      }
-      unset($bbs_form['_token']);
       
       $bbs->fill($bbs_form)->save();
-      
-      
       
       return redirect('users/bbs/index');
     }
