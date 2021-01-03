@@ -10,7 +10,7 @@
             <table class="table">
                 
                 <tr>
-                    <th class="content-right">氏名</th><td>{{ $tests->user->name }}</td>
+                    <th class="content-right">名前</th><td>{{ $tests->user->name }}</td>
                 </tr>
                 <tr>
                     <th>希望日付</th><td>{{ date('Y年m月d日',  strtotime($tests->date)) }}</td>

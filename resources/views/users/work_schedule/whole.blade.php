@@ -23,7 +23,7 @@
                             
                             <tr>
                                 <th>状態</th>
-                                <th>氏名</th>
+                                <th>名前</th>
                                 <th>出勤予定時間</th>
                                 <th>退社予定時間</th>
                                 <th>出勤</th>
@@ -50,7 +50,7 @@
                                     </td>
                                 <td>{{ date('G時i分',  strtotime($status->attendance)) }}</td>
                                 <td>
-                                    @if(date("Y-m-d",strtotime($date)) < $status->leaving_date )
+                                    @if($date < date("m月d日",strtotime($status->leaving_date)) )
                                         {{ config('const.NEXT_DAY') }}
                                     @endif
                                     {{ date('G時i分',  strtotime($status->leaving)) }}

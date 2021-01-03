@@ -60,61 +60,85 @@ class LeaveController extends Controller
     public function management(Request $request){
         
         $sort = $request->sort;
+        $sort_order = $request->sort_order;
         $reply = $request->reply;
+        $cause = $request->cause;
+        $suggested_date = $request->suggested_date;
+        $leave_reason_master_id = $request->leave_reason_master_id;
         $cond_name = $request->cond_name;
         
-        if($reply == '' && $cond_name == '') {
-            $manage = Leave::orderBy('created_at', $sort)
-            ->simplePaginate(10);
+        $leave_type = LeaveReasonMaster::all();
+        
+        $leave = Leave::orderBy('created_at', 'desc');
+        
+        if($sort_order != '') {
+          $leave = Leave::orderBy($sort_order, $sort);
         }
         
-        if ($reply == 'post' && $sort == 'asc') {
-            $manage = Leave::where('permit', null)
-            ->orderBy('created_at', $sort)
-            ->simplePaginate(10);
+        
+        if($reply != '') {
+          $leave->where('permit', null);
+        }
+        
+        if($cause != '') {
+          $leave->where('text','like','%'.$cause.'%');
+        }
+        
+        if($suggested_date != '') {
+          $leave->where('date','like','%'.$suggested_date.'%');
+        }
+        
+        if($leave_reason_master_id != '') {
+          $leave->where('leave_reason_master_id', $leave_reason_master_id);
         }
         
         $user = User::where('name','like','%'.$cond_name.'%')->first();
-        
         if($cond_name != '') {
-            
-            if(is_null($user)) {
-                $manage = Leave::where('id', null)
-                ->simplePaginate(10);
-            } else {
-                $manage = $user->leave()
-                ->orderBy('created_at', $sort)
-                ->simplePaginate(10);
-            }
+          if (is_null($user)){
+            $leave->where('id', null);
+          } else {
+            $leave->where('user_id', $user->id);
+          }
         }
         
-        if($reply == 'post' && $cond_name != '') {
-            if(is_null($user)) {
-              $manage = Leave::where('id', null)->simplePaginate(10);
-            } else {
-              $manage = Leave::where('user_id', $user->id)
-              ->where('permit', null)
-              ->orderBy('created_at', $sort)
-              ->simplePaginate(10);
-            }
-        }
+        $manage = $leave->simplePaginate(10);
+        
+        
+        //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
+        //var_dump($leave);
+        
         
         $selected1 = '';
         $selected2 = '';
+        $selected3 = '';
+        $selected4 = '';
+        $selected5 = '';
+        $selected6 = '';
+        $selected7 = '';
         
-        if($sort == 'asc') {
+        if($sort_order == 'date') {
             $selected1 = 'selected';
-        } else {
+        }
+        if($sort_order == 'user_id') {
             $selected2 = 'selected';
         }
-        
-        $selected3 = '';
-        if($reply == 'post') {
+        if($sort_order == 'text') {
             $selected3 = 'selected';
         }
-        
+        if($sort == 'desc') {
+            $selected4 = 'selected';
+        }
+        if($sort == 'asc') {
+            $selected5 = 'selected';
+        }
+        if($reply == 'post') {
+            $selected6 = 'checked';
+        }
+        if(isset($leave_reason_master_id)) {
+            $selected7 = 'selected';
+        }
        
-        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2, 'selected3' => $selected3 ]);
+        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'cause' => $cause, 'suggested_date' => $suggested_date, 'leave_type' => $leave_type, 'selected1' => $selected1, 'selected2' => $selected2, 'selected3' => $selected3, 'selected4' => $selected4, 'selected5' => $selected5, 'selected6' => $selected6, 'selected7' => $selected7 ]);
     }
     
     

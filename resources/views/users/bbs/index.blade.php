@@ -16,28 +16,51 @@
                 </div>
                 <div class="col-md-8">
                     <form action="{{ action('Users\BbsController@index')}}" method="get">
-                        <div class="form-group row">
-                            <label class="col-md-2">掲載者</label>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
-                            </div>
-                        </div>
                         
                         <div class="form-group row">
                             <label class="col-md-2">タイトル</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
                             </div>
-                            <select name="sort">
-                                <option value="asc" {{ $selected1 }}>昇順</option>
-                                <option value="desc" {{ $selected2 }} >降順</option>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2">本文</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="cond_body" value="{{ $cond_body }}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2">掲載日</label>
+                            <div class="col-md-4">
+                                <input type="date" class="form-control" name="listing_date" value="{{ $listing_date }}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2">掲載者</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
+                            </div>
+                        </div>
+                        <div style="margin-left:128px" class="form-group row">
+                            
+                            <select name="sort_order">
+                                <option value="posted_at" {{ $selected }} >掲載日</option>
+                                <option value="user_id" {{ $selected }} >掲載者</option>
+                                <option value="title" {{ $selected }}>タイトル</option>
+                                <option value="body" {{ $selected }}>本文</option>
+                            </select>
+                            <select style="margin-left:23px" name="sort">
+                                <option value="desc" {{ $selected }} >降順</option>
+                                <option value="asc" {{ $selected }}>昇順</option>
                             </select>
                             <div class="col-md-2">
                                 {{ csrf_field() }}
                                 <input type="submit" class="btn btn-primary" value="検索">
                             </div>
                         </div>
-                        
                     </form>
                 </div>
             </div>
@@ -48,8 +71,8 @@
                     <tr>
                         <th>タイトル</th>
                         <th>本文</th>
-                        <th>掲載日</th>
-                        <th>掲載者</th>
+                        <th width="20%">掲載日</th>
+                        <th width="20%">掲載者</th>
                         @can('admin')
                         <th>操作</th>
                         @endcan
@@ -58,9 +81,7 @@
                 <tbody>
                     @foreach($posts as $bbs)
                         <div class="widelink">
-                            
                             <tr>
-                                
                                <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 20) }}</a></td>
                                <td>{{ \Illuminate\Support\Str::limit($bbs->body, 20) }}</td>
                                <td>{{ date('Y年m月d日',  strtotime($bbs->posted_at)) }}</td>

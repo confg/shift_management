@@ -45,8 +45,6 @@ class WorkScheduleController extends Controller
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($now->format('Y'), $now->format('m')), 'currentMonth' => $now->format('m'), 'currentYear' => $now->format('Y')]);
     }
     
-    
-    
     //名前をとるメソッド
     public function getUserName($user_id) {
         $username = DB::table('users')
@@ -70,7 +68,6 @@ class WorkScheduleController extends Controller
         }
         
         //user_idの重複をのぞくtarget_dateの一番大きい値の検索
-        
         $uniqueday = DB::table('works')
         ->select(DB::raw('user_id, max(target_date) as max_target_date'))
         ->whereDate('target_date', $sample)
@@ -79,7 +76,6 @@ class WorkScheduleController extends Controller
         
         $result = array();
         
-        //$uniquedayがダンボール箱$uniquesがダンボール箱の中の箱
         foreach($uniqueday as $uniques) {
             $user_id = $uniques->user_id;
             $updated_at = $uniques->max_target_date;
@@ -96,7 +92,10 @@ class WorkScheduleController extends Controller
             $a->username = $this->getUserName($a->user_id);
         }
         
+        
         $work = Work::all();
+        
+        
         
         return view('users.work_schedule.whole', ['date' => $date , 'work' => $work , 'result' => $result]);
     }
@@ -182,16 +181,16 @@ class WorkScheduleController extends Controller
                 }
             }
          
-            // 配列に日付をセッ��
+            // 配列に日付をセット
             $calendar[$j]['day'] = $i;
             $j++;
          
             // 月末日の場合
             if ($i == $last_day) {
-         
+                
                 // 月末日から残りをループ
                 for ($e = 1; $e <= 6 - $week; $e++) {
-         
+                    
                     // 後半に空文字をセット
                     $calendar[$j]['day'] = '';
                     $j++;

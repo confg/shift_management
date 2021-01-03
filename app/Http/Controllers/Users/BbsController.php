@@ -11,133 +11,153 @@ use Illuminate\Support\Facades\Auth;
 
 class BbsController extends Controller
 {
+  public function formcreate() {
+    
+    return view('users.bbs.create');
+  }
+  
+  public function create(Request $request) {
+   
+    $this->validate($request, Bbs::$rules);
+    
+    $bbs = new Bbs;
+    $form = $request->all();
     
     
-    public function formcreate()
-    {
+    $bbs->posted_at = Carbon::now();
+    
+    $bbs->user_id = Auth::id();
+    
+    $bbs->fill($form);
+    
+    $bbs->save();
+    
+    
+    return redirect('users/bbs/index');
+    
+  }
+  
+  
+  
+  public function index(Request $request) {
+    
+    $sort = $request->sort;
+    $sort_order = $request->sort_order;
+    $cond_title = $request->cond_title;
+    $cond_name = $request->cond_name;
+    $cond_body = $request->cond_body;
+    $listing_date = $request->listing_date;
+    
+    $index = Bbs::orderBy('posted_at', 'desc');
+    
+    if($sort_order != '') {
+      $index = Bbs::orderBy($sort_order, $sort);
+    }
+    
+    if($listing_date != '') {
+      $index->where('posted_at','like','%'.$listing_date.'%');
+    }
+    
+    if($cond_body != '') {
+      $index->where('body','like','%'.$cond_body.'%');
+    }
+    
+    if($cond_title != '') {
+      $index->where('title','like','%'.$cond_title.'%');
+    }
+    
+    
+    if($cond_name != '') {
       
-      return view('users.bbs.create');
+      $users = User::where('name','like','%'.$cond_name.'%')->get();
+      
+      foreach ($users as $user) {
+        echo $user->bbs;
+      }
+      
+        $index->where('user_id', $user->id);
+      
       
     }
     
-    public function create(Request $request)
-    {
-     
-      $this->validate($request, Bbs::$rules);
+    /*
+    if($cond_name != '') {
       
-      $bbs = new Bbs;
-      $form = $request->all();
-      
-      
-      $bbs->posted_at = Carbon::now();
-      
-      $bbs->user_id = Auth::id();
-      
-      $bbs->fill($form);
-      
-      $bbs->save();
-      
-      
-      return redirect('users/bbs/index');
-      
-    }
-    
-    
-    
-    public function index(Request $request) {
-      
-      $sort = $request->sort;
-      $cond_title = $request->cond_title;
-      $cond_name = $request->cond_name;
-      
-      if($cond_title == '' && $cond_name == '') {
-        $posts = Bbs::orderBy('posted_at', $sort)->simplePaginate(10);
-      }
-      
-      if($cond_title != '') {
-        $posts = Bbs::where('title','like','%'.$cond_title.'%')
-        ->orderBy('posted_at', $sort)
-        ->simplePaginate(10);
-      }
-      
-      $user = User::where('name','like','%'.$cond_name.'%')->first();
-      
-      if($cond_name != '') {
-        if (is_null($user)){
-          $posts = Bbs::where('id', null)->simplePaginate(10);
-        } else {
-          $posts = $user->bbs()
-          ->orderBy('posted_at', $sort)
-          ->simplePaginate(10);
-        }
-      }
-      
-      if($cond_title != '' && $cond_name != '') {
-        if(is_null($user)) {
-          $posts = Bbs::where('id', null)->simplePaginate(10);
-        } else {
-          $posts = Bbs::where('user_id', $user->id)
-          ->where('title','like','%'.$cond_title.'%')
-          ->orderBy('posted_at', $sort)
-          ->simplePaginate(10);
-        }
-      }
-      
-      $selected1 = '';
-      $selected2 = '';
-      
-      if($sort == 'asc') {
-        $selected1 = 'selected';
+      if (is_null($user)){
+        $index->where('id', null);
       } else {
-        $selected2 = 'selected';
+        $index->where('user_id', $user->id);
       }
       
-      return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'selected1' => $selected1, 'selected2' => $selected2 ]);
-      
     }
-    
-    
-    public function edit(Request $request) {
+   */
+   
+    /*
+    if($cond_name != '') {
       
-      $bbs = Bbs::find($request->id);
-      if (empty($bbs)) {
-        abort(404);
+      
+      foreach ($user as $users) {
+        
+        if (is_null($users)){
+          $index->where('id', null);
+        } else {
+          $index->where('user_id', $users->id);
+        }
+        
       }
-      return view('users.bbs.edit', ['bbs_form' => $bbs]);
     }
+    */
+    $posts = $index->simplePaginate(10);
     
-    public function update(Request $request) {
-      
-      $this->validate($request, Bbs::$rules);
-      
-      $bbs = Bbs::find($request->id);
-      
-      $bbs_form = $request->all();
-      
-      $bbs->fill($bbs_form)->save();
-      
-      return redirect('users/bbs/index');
+    $selected = '';
+    
+    
+    
+    
+    
+    //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
+    //var_dump($user);
+    
+    return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'cond_body' => $cond_body, 'listing_date' => $listing_date, 'sort_order' => $sort_order  , 'selected' => $selected ]);
+    
+  }
+  
+  
+  public function edit(Request $request) {
+    
+    $bbs = Bbs::find($request->id);
+    if (empty($bbs)) {
+      abort(404);
     }
+    return view('users.bbs.edit', ['bbs_form' => $bbs]);
+  }
+  
+  public function update(Request $request) {
     
-    public function delete(Request $request)
-    {
-      
-      $bbs = Bbs::find($request->id);
-
-      $bbs->delete();
-      return redirect('users/bbs/index');
-    }
+    $this->validate($request, Bbs::$rules);
     
+    $bbs = Bbs::find($request->id);
     
+    $bbs_form = $request->all();
     
+    $bbs->fill($bbs_form)->save();
     
-    public function front(Request $request) {
-      
-      $bbs = Bbs::find($request->id);
-      
-      
-      
-      return view('users.bbs.front', ['bbs' => $bbs]);
-    }
+    return redirect('users/bbs/index');
+  }
+  
+  public function delete(Request $request)
+  {
     
- }
+    $bbs = Bbs::find($request->id);
+    
+    $bbs->delete();
+    return redirect('users/bbs/index');
+  }
+  
+  public function front(Request $request) {
+    
+    $bbs = Bbs::find($request->id);
+    
+    return view('users.bbs.front', ['bbs' => $bbs]);
+  }
+}
