@@ -17,7 +17,6 @@ class CreateBbsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('body');
-            $table->string('image_path')->nullable();
             $table->string('posted_at');
             $table->integer('user_id');
             $table->timestamps();

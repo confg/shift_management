@@ -47,14 +47,12 @@
                         <div style="margin-left:128px" class="form-group row">
                             
                             <select name="sort_order">
-                                <option value="posted_at" {{ $selected }} >掲載日</option>
-                                <option value="user_id" {{ $selected }} >掲載者</option>
-                                <option value="title" {{ $selected }}>タイトル</option>
-                                <option value="body" {{ $selected }}>本文</option>
+                                <option value="posted_at" {{ $selected['posted_at'] ? 'selected' : ''  }} >掲載日</option>
+                                <option value="user_id" {{ $selected['user_name'] ? 'selected' : ''  }} >掲載者</option>
                             </select>
                             <select style="margin-left:23px" name="sort">
-                                <option value="desc" {{ $selected }} >降順</option>
-                                <option value="asc" {{ $selected }}>昇順</option>
+                                <option value="desc"{{ $sort1['desc'] ? 'selected' : '' }}>降順</option>
+                                <option value="asc"{{ $sort1['asc'] ? 'selected' : '' }}>昇順</option>
                             </select>
                             <div class="col-md-2">
                                 {{ csrf_field() }}

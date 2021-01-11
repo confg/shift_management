@@ -48,6 +48,14 @@ class BbsController extends Controller
     $cond_body = $request->cond_body;
     $listing_date = $request->listing_date;
     
+    /*
+    if($cond_name != ''){
+      $users = User::where('name','like','%'.$cond_name.'%')->get();
+    } else {
+      $users = User::all();
+    }
+    */
+    
     $index = Bbs::orderBy('posted_at', 'desc');
     
     if($sort_order != '') {
@@ -66,59 +74,29 @@ class BbsController extends Controller
       $index->where('title','like','%'.$cond_title.'%');
     }
     
-    
     if($cond_name != '') {
-      
+      //USERクラスの名前取得
       $users = User::where('name','like','%'.$cond_name.'%')->get();
+      //対象のプロパティだけのid抽出してるところ
+      $ids = $users->pluck('id');
       
-      foreach ($users as $user) {
-        echo $user->bbs;
-      }
-      
-        $index->where('user_id', $user->id);
-      
-      
+      $index->whereIn('user_id', $ids);
     }
     
-    /*
-    if($cond_name != '') {
-      
-      if (is_null($user)){
-        $index->where('id', null);
-      } else {
-        $index->where('user_id', $user->id);
-      }
-      
-    }
-   */
-   
-    /*
-    if($cond_name != '') {
-      
-      
-      foreach ($user as $users) {
-        
-        if (is_null($users)){
-          $index->where('id', null);
-        } else {
-          $index->where('user_id', $users->id);
-        }
-        
-      }
-    }
-    */
+    
     $posts = $index->simplePaginate(10);
     
-    $selected = '';
+    $selected = array(
+      'posted_at' => $sort_order == 'posted_at',
+      'user_name' => $sort_order == 'user_id',
+    );
     
+    $sort1 = array(
+      'asc' => $sort == 'asc',
+      'desc' => $sort == 'desc'
+    );
     
-    
-    
-    
-    //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-    //var_dump($user);
-    
-    return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'cond_body' => $cond_body, 'listing_date' => $listing_date, 'sort_order' => $sort_order  , 'selected' => $selected ]);
+    return view('users.bbs.index', ['posts' => $posts, 'cond_title' => $cond_title, 'cond_name' => $cond_name, 'cond_body' => $cond_body, 'listing_date' => $listing_date, 'sort_order' => $sort_order, 'selected' => $selected, 'sort1' => $sort1 ]);
     
   }
   

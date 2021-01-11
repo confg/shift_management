@@ -50,6 +50,9 @@ class LeaveController extends Controller
         
         $leave->fill($form);
         $leave->user_id = Auth::id();
+        $leave->update([
+            'permit' => null
+            ]);
         $leave->save();
         
         return redirect('users/mypage');
@@ -64,15 +67,23 @@ class LeaveController extends Controller
         $reply = $request->reply;
         $cause = $request->cause;
         $suggested_date = $request->suggested_date;
+        $application_date = $request->application_date;
         $leave_reason_master_id = $request->leave_reason_master_id;
         $cond_name = $request->cond_name;
+        
         
         $leave_type = LeaveReasonMaster::all();
         
         $leave = Leave::orderBy('created_at', 'desc');
         
-        if($sort_order != '') {
-          $leave = Leave::orderBy($sort_order, $sort);
+       
+        
+        if($sort_order == 'user_id') {
+            $leave = Leave::select('leaves.*')
+            ->join('users', 'leaves.user_id', '=', 'users.id')
+            ->orderBy('users.name', $sort);
+        }elseif($sort_order != '') {
+            $leave = Leave::orderBy($sort_order, $sort);
         }
         
         
@@ -88,17 +99,22 @@ class LeaveController extends Controller
           $leave->where('date','like','%'.$suggested_date.'%');
         }
         
+        if($application_date != '') {
+          $leave->where('created_at','like','%'.$application_date.'%');
+        }
+        
         if($leave_reason_master_id != '') {
           $leave->where('leave_reason_master_id', $leave_reason_master_id);
         }
         
-        $user = User::where('name','like','%'.$cond_name.'%')->first();
+        $users = User::where('name','like','%'.$cond_name.'%')->first();
         if($cond_name != '') {
-          if (is_null($user)){
-            $leave->where('id', null);
-          } else {
-            $leave->where('user_id', $user->id);
-          }
+          //USERクラスの名前取得
+          $users = User::where('name','like','%'.$cond_name.'%')->get();
+          //対象のプロパティだけのid抽出してるところ
+          $ids = $users->pluck('id');
+          
+          $leave->whereIn('user_id', $ids);
         }
         
         $manage = $leave->simplePaginate(10);
@@ -107,38 +123,27 @@ class LeaveController extends Controller
         //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
         //var_dump($leave);
         
+        $selected = array(
+            'suggested_date' => $sort_order == 'date',
+            'user_name' => $sort_order == 'user_id',
+            'created_at' => $sort_order == 'created_at',
+        );
         
-        $selected1 = '';
-        $selected2 = '';
-        $selected3 = '';
-        $selected4 = '';
+        $sort1 = array(
+            'asc' => $sort == 'asc',
+            'desc' => $sort == 'desc'
+        );
+        
         $selected5 = '';
-        $selected6 = '';
-        $selected7 = '';
         
-        if($sort_order == 'date') {
-            $selected1 = 'selected';
-        }
-        if($sort_order == 'user_id') {
-            $selected2 = 'selected';
-        }
-        if($sort_order == 'text') {
-            $selected3 = 'selected';
-        }
-        if($sort == 'desc') {
-            $selected4 = 'selected';
-        }
-        if($sort == 'asc') {
-            $selected5 = 'selected';
-        }
         if($reply == 'post') {
-            $selected6 = 'checked';
+            $selected5 = 'checked';
         }
-        if(isset($leave_reason_master_id)) {
-            $selected7 = 'selected';
-        }
+        
+        
+        //var_dump($leave_reason_master_id);
        
-        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'cause' => $cause, 'suggested_date' => $suggested_date, 'leave_type' => $leave_type, 'selected1' => $selected1, 'selected2' => $selected2, 'selected3' => $selected3, 'selected4' => $selected4, 'selected5' => $selected5, 'selected6' => $selected6, 'selected7' => $selected7 ]);
+        return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'cause' => $cause, 'suggested_date' => $suggested_date, 'leave_type' => $leave_type, 'leave_reason_master_id' => $leave_reason_master_id, 'application_date' => $application_date, 'selected' => $selected, 'sort1' => $sort1, 'selected5' => $selected5 ]);
     }
     
     

@@ -118,6 +118,8 @@ class WorkScheduleController extends Controller
             $work = new Work;
         }
         
+        
+        
         return view('users.work_schedule.date',[ 'work' => $work , 'date' => $date , 'selectDay' => $day , 'selectMonth' => $month ]);
     }
     

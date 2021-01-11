@@ -19,7 +19,7 @@
                     <th>有給・その他</th><td>{{ $tests->leaveReasonMaster->reason_name }}</td>
                 </tr>
                 <tr>
-                    <th>理由</th><td>{{ $tests->text }}</td>
+                    <th>備考・理由</th><td>{{ $tests->text }}</td>
                 </tr>
                 <tr>
                     <th>コメント</th><td><textarea name="comment" maxlength='50' rows="3" cols="30" ></textarea></td>
