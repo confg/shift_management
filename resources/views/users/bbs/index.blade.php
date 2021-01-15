@@ -100,10 +100,7 @@
                     @endforeach
                 </tbody>
             </table>
-            
-            <div class="next">
-                {{ $posts->appends(request()->query())->links() }}
-            </div>
+            {{ $posts->appends(request()->query())->links('vendor.pagination.simple-bootstrap-4') }}
         </div>
     </div>
 @endsection

@@ -81,20 +81,19 @@ a:hover {
   text-align: center;
 }
 
-.next {
-  background: black;
+.next a {
+  color: #808080;
   padding: auto;
   margin: auto;
 }
 
 .next:hover {
-  color: black;
+  color: #a9a9a9;
 }
 
 .head,
 .contents {
   display: flex;
-  flex-direction: row;
 }
 
 .date {
@@ -147,7 +146,11 @@ a:hover {
 }
 
 .month {
-  color: #0000cd;
+  color: #0000ff;
+}
+
+.month:hover {
+  color: #a9a9a9;
 }
 
 .block {
@@ -182,15 +185,10 @@ select {
 
 .select-box-right {
   margin-left: 100px;
-  width: 150px;
+  width: 70px;
 }
 
 .wrap {
   margin-top: 30px;
-}
-
-.flex {
-  display: flex;
-  flex-direction: row;
 }
 

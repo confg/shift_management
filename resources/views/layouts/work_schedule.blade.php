@@ -15,7 +15,6 @@
     
     <link href="{{ secure_asset('css/my.css') }}" rel="stylesheet" type="text/css">
     
-    
     <div class="header">
         <div class="header-left">
             <div class="black">

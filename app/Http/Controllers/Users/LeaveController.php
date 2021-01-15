@@ -79,9 +79,11 @@ class LeaveController extends Controller
        
         
         if($sort_order == 'user_id') {
-            $leave = Leave::select('leaves.*')
-            ->join('users', 'leaves.user_id', '=', 'users.id')
-            ->orderBy('users.name', $sort);
+            if($application_date == '') {
+                $leave = Leave::select('leaves.*')
+                ->join('users', 'leaves.user_id', '=', 'users.id')
+                ->orderBy('users.name', $sort);
+            }
         }elseif($sort_order != '') {
             $leave = Leave::orderBy($sort_order, $sort);
         }
@@ -117,7 +119,7 @@ class LeaveController extends Controller
           $leave->whereIn('user_id', $ids);
         }
         
-        $manage = $leave->simplePaginate(10);
+        $manage = $leave->Paginate(10);
         
         
         //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);

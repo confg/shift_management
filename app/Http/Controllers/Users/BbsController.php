@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+
 class BbsController extends Controller
 {
   public function formcreate() {
@@ -48,18 +49,12 @@ class BbsController extends Controller
     $cond_body = $request->cond_body;
     $listing_date = $request->listing_date;
     
-    /*
-    if($cond_name != ''){
-      $users = User::where('name','like','%'.$cond_name.'%')->get();
-    } else {
-      $users = User::all();
-    }
-    */
-    
     $index = Bbs::orderBy('posted_at', 'desc');
     
-    if($sort_order != '') {
-      $index = Bbs::orderBy($sort_order, $sort);
+    if($sort_order == 'user_id'){
+      $index = Bbs::select('bbs.*')
+      ->join('users', 'bbs.user_id', '=', 'users.id')
+      ->orderBy('users.name', $sort);
     }
     
     if($listing_date != '') {
@@ -84,7 +79,7 @@ class BbsController extends Controller
     }
     
     
-    $posts = $index->simplePaginate(10);
+    $posts = $index->Paginate(10);
     
     $selected = array(
       'posted_at' => $sort_order == 'posted_at',

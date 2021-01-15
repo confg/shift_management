@@ -97,9 +97,7 @@
             </tr>
             @endforeach
         </table>
-        <div class="next">
-            {{ $manage->appends(request()->query())->links() }}
-        </div>
+        {{ $manage->appends(request()->query())->links('vendor.pagination.simple-bootstrap-4') }}
     </div>
 </body>
 @endsection
