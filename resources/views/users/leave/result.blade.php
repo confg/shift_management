@@ -18,8 +18,8 @@
             </tr>
             @foreach($leave as $result)
             <tr>
-                <td>{{ date('Y年m月d日',  strtotime($result->created_at)) }}</td>
-                <td>{{ date('Y年m月d日',  strtotime($result->date)) }}</td>
+                <td>{{ date('Y年n月j日',  strtotime($result->created_at)) }}</td>
+                <td>{{ date('Y年n月j日',  strtotime($result->date)) }}</td>
                 
                 @if($result->permit == true)
                     <td>{{ config('const.PERMIT') }}</td>
@@ -28,11 +28,10 @@
                 @endif
                 
                 <td>{{ $result->comment }}</td>
-                
             </tr>
-            
             @endforeach
         </table>
+        {{ $leave->links('vendor.pagination.simple-bootstrap-4') }}
     </div>    
 </body>
 @endsection

@@ -52,10 +52,21 @@ class BbsController extends Controller
     $index = Bbs::orderBy('posted_at', 'desc');
     
     if($sort_order == 'user_id'){
-      $index = Bbs::select('bbs.*')
-      ->join('users', 'bbs.user_id', '=', 'users.id')
-      ->orderBy('users.name', $sort);
+      if($sort == 'asc') {
+        $index = Bbs::select('bbs.*')
+        ->join('users', 'bbs.user_id', '=', 'users.id')
+        ->orderByRaw('CAST(users.name AS char) asc');
+      }elseif($sort == 'desc') {
+        $index = Bbs::select('bbs.*')
+        ->join('users', 'bbs.user_id', '=', 'users.id')
+        ->orderByRaw('CAST(users.name AS char) desc');
+      }
+      
+    }else {
+      $index = Bbs::orderBy('posted_at', $sort);
     }
+    
+    
     
     if($listing_date != '') {
       $index->where('posted_at','like','%'.$listing_date.'%');

@@ -5,7 +5,6 @@
   <div  class="container">
     <div>
       <div>
-        
         <div>
           <h1>名前</h1>
           <h3>{{ $bbs->user->name }}</h3>

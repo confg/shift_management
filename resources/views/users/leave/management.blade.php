@@ -79,14 +79,14 @@
             </tr>
             @foreach($manage as $test)
             <tr>
-                <td>{{ date('Y年m月j日',  strtotime($test->created_at)) }}</td>
+                <td>{{ date('Y年n月j日',  strtotime($test->created_at)) }}</td>
                 @if(isset($test->permit))
                     <td>{{ $test->user->name }}</td>
                 @else
                     <td><a href="{{ action('Users\LeaveController@front', [ 'id' => $test->id ]) }}">{{ $test->user->name }}</a></td>
                 @endif
                 
-                <td>{{ date('Y年m月j日',  strtotime($test->date)) }}</td>
+                <td>{{ date('Y年n月j日',  strtotime($test->date)) }}</td>
                 <td>{{ $test->leaveReasonMaster->reason_name }}</td>
                 <td >{{ \Illuminate\Support\Str::limit($test->text,20) }}</td>
                 @if(isset($test->permit))

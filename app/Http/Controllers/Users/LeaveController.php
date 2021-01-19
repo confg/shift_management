@@ -23,8 +23,6 @@ class LeaveController extends Controller
         
         $all = LeaveReasonMaster::all();
         
-        //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-        
         return view('users.leave.application',[ 'user' => $this->getUserName(Auth::id()), 'all' => $all]);
     }
     
@@ -76,13 +74,16 @@ class LeaveController extends Controller
         
         $leave = Leave::orderBy('created_at', 'desc');
         
-       
         
-        if($sort_order == 'user_id') {
-            if($application_date == '') {
+        if($sort_order == 'user_id' || $sort == 'asc') {
+            if($application_date == '' && $sort == 'asc') {
                 $leave = Leave::select('leaves.*')
                 ->join('users', 'leaves.user_id', '=', 'users.id')
-                ->orderBy('users.name', $sort);
+                ->orderByRaw('CAST(users.name AS char) asc');
+            }elseif($application_date == '' && $sort == 'desc') {
+                $leave = Leave::select('leaves.*')
+                ->join('users', 'leaves.user_id', '=', 'users.id')
+                ->orderByRaw('CAST(users.name AS char) desc');
             }
         }elseif($sort_order != '') {
             $leave = Leave::orderBy($sort_order, $sort);
@@ -143,7 +144,7 @@ class LeaveController extends Controller
         }
         
         
-        //var_dump($leave_reason_master_id);
+        //var_dump($sort);
        
         return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'cause' => $cause, 'suggested_date' => $suggested_date, 'leave_type' => $leave_type, 'leave_reason_master_id' => $leave_reason_master_id, 'application_date' => $application_date, 'selected' => $selected, 'sort1' => $sort1, 'selected5' => $selected5 ]);
     }
@@ -160,7 +161,8 @@ class LeaveController extends Controller
         
         $leave = Leave::where('user_id', Auth::id())
         ->where('permit', '!=', null)
-        ->get();
+        ->orderBy('date', 'desc')
+        ->Paginate(10);
         
         
         return view('users.leave.result', [ 'leave' => $leave]); 

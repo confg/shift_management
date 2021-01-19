@@ -72,7 +72,7 @@
                         <th width="20%">掲載日</th>
                         <th width="20%">掲載者</th>
                         @can('admin')
-                        <th>操作</th>
+                            <th>操作</th>
                         @endcan
                     </tr>
                 </thead>
@@ -82,20 +82,19 @@
                             <tr>
                                <td><a href="{{ action('Users\BbsController@front', ['id' => $bbs->id]) }}">{{ \Illuminate\Support\Str::limit($bbs->title, 20) }}</a></td>
                                <td>{{ \Illuminate\Support\Str::limit($bbs->body, 20) }}</td>
-                               <td>{{ date('Y年m月d日',  strtotime($bbs->posted_at)) }}</td>
+                               <td>{{ date('Y年n月j日',  strtotime($bbs->posted_at)) }}</td>
                                <td>{{ $bbs->user->name }}</td>
-                               @can('admin')
-                               <td>
-                                    <div>
-                                        <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
-                                    </div>
-                                    <div>
-                                        <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
-                                    </div>
-                                </td>
+                                @can('admin')
+                                    <td>
+                                        <div>
+                                            <a href="{{ action('Users\BbsController@edit', ['id' => $bbs->id]) }}">更新</a>
+                                        </div>
+                                        <div>
+                                            <a href="{{ action('Users\BbsController@delete', ['id' => $bbs->id]) }}">削除</a>
+                                        </div>
+                                    </td>
                                 @endcan
                             </tr>
-                            
                         </div>
                     @endforeach
                 </tbody>

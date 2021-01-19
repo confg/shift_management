@@ -58,7 +58,7 @@ class WorkScheduleController extends Controller
     public function whole(Request $request) {
         date_default_timezone_set('Asia/Tokyo');
         
-        $date = date('m月j日');
+        $date = date('n月j日');
         $sample = $request->target_date;
         
         if($sample == '') {

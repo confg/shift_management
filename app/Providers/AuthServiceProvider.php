@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -33,6 +34,11 @@ class AuthServiceProvider extends ServiceProvider
         //ユーザー
         Gate::define('user', function ($user) {
 		return ($user->role == false);
+        });
+        
+        //ログインユーザーのみ
+        Gate::define('login_user', function ($user) {
+		return ($user->id == Auth::id());
         });
     }
 }
