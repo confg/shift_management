@@ -35,10 +35,5 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('user', function ($user) {
 		return ($user->role == false);
         });
-        
-        //ログインユーザーのみ
-        Gate::define('login_user', function ($user) {
-		return ($user->id == Auth::id());
-        });
     }
 }
