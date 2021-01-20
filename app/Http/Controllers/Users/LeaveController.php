@@ -43,7 +43,6 @@ class LeaveController extends Controller
             $leave = Leave::find($target->id);
         }
         
-        
         $this->validate($request, Leave::$rules);
         
         $leave->fill($form);
@@ -68,12 +67,9 @@ class LeaveController extends Controller
         $application_date = $request->application_date;
         $leave_reason_master_id = $request->leave_reason_master_id;
         $cond_name = $request->cond_name;
-        
-        
         $leave_type = LeaveReasonMaster::all();
         
         $leave = Leave::orderBy('created_at', 'desc');
-        
         
         if($sort_order == 'user_id' || $sort == 'asc') {
             if($application_date == '' && $sort == 'asc') {
@@ -121,10 +117,7 @@ class LeaveController extends Controller
         }
         
         $manage = $leave->Paginate(10);
-        
-        
-        //ini_set('xdebug.var_display_max_children', -1); ini_set('xdebug.var_display_max_data', -1); ini_set('xdebug.var_display_max_depth', -1);
-        //var_dump($leave);
+        $selected5 = '';
         
         $selected = array(
             'suggested_date' => $sort_order == 'date',
@@ -137,14 +130,9 @@ class LeaveController extends Controller
             'desc' => $sort == 'desc'
         );
         
-        $selected5 = '';
-        
         if($reply == 'post') {
             $selected5 = 'checked';
         }
-        
-        
-        //var_dump($sort);
        
         return view('users.leave.management', [ 'manage' => $manage, 'cond_name' => $cond_name, 'cause' => $cause, 'suggested_date' => $suggested_date, 'leave_type' => $leave_type, 'leave_reason_master_id' => $leave_reason_master_id, 'application_date' => $application_date, 'selected' => $selected, 'sort1' => $sort1, 'selected5' => $selected5 ]);
     }
@@ -152,9 +140,9 @@ class LeaveController extends Controller
     
     public function front(Request $request) {
         
-        $tests = Leave::find($request->id);
+        $front = Leave::find($request->id);
         
-        return view('users.leave.front', [ 'tests' => $tests]);
+        return view('users.leave.front', [ 'front' => $front]);
     }
     
     public function result() {
@@ -186,7 +174,7 @@ class LeaveController extends Controller
         $permitFlg = false;
         
         //ボタンからきたリクエストをデータベースに入る形に変える
-        //permit��blockingはfront.bladeファイルのname属性
+        //permitのblockingはfront.bladeファイルのname属性
         if(isset($request['permit'])) {
             $permitFlg = true;
         }elseif(isset($request['blocking'])) {

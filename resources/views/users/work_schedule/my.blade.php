@@ -19,23 +19,20 @@
                     <th class="blue">金</th>
                     <th class="green">土</th>
                 </tr>
-             
                 <tr>
                 <?php $cnt = 0; ?>    
-                @foreach ($dates as $key => $value)
-             
-                    <td class="day">
-                    <?php $cnt++; ?>
-                    <a class="dayarea" href ="{{ action('Users\WorkScheduleController@date', [ 'currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
-                    </td>
-                
-                    @if ($cnt == 7)
-                    <tr>
-                    <tr/>
-                    <?php $cnt = 0; ?>
-                    @endif
-             
-                @endforeach
+                    @foreach ($dates as $key => $value)
+                        <td class="day">
+                            <?php $cnt++; ?>
+                            <a class="dayarea" href ="{{ action('Users\WorkScheduleController@date', [ 'currentYear' => $currentYear, 'currentMonth' => $currentMonth, 'currentDay' => $value['day'] ]) }}" >{{ $value['day'] }}</a>
+                        </td>
+                        
+                        @if ($cnt == 7)
+                            <tr>
+                            <tr/>
+                        <?php $cnt = 0; ?>
+                        @endif
+                    @endforeach
                 </tr>
             </table>
         </div>

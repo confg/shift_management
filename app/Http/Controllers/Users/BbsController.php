@@ -66,8 +66,6 @@ class BbsController extends Controller
       $index = Bbs::orderBy('posted_at', $sort);
     }
     
-    
-    
     if($listing_date != '') {
       $index->where('posted_at','like','%'.$listing_date.'%');
     }

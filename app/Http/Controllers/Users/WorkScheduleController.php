@@ -39,7 +39,6 @@ class WorkScheduleController extends Controller
         $now->setdate($currentYear,$currentMonth,1);
         
         //modeに+1と-1の値を与える、リクエストで受け取る、modify()の引数の中に変数と文字列で結合する
-        
         $now->modify($zenngetu.' month');
         
         return view('users.work_schedule.my', ['dates' => $this->CalendarTest($now->format('Y'), $now->format('m')), 'currentMonth' => $now->format('m'), 'currentYear' => $now->format('Y')]);
@@ -59,10 +58,10 @@ class WorkScheduleController extends Controller
         date_default_timezone_set('Asia/Tokyo');
         
         $date = date('n月j日');
-        $sample = $request->target_date;
+        $target_date = $request->target_date;
         
-        if($sample == '') {
-            $sample = date('Y-m-d');
+        if($target_date == '') {
+            $target_date = date('Y-m-d');
         }else {
             $date = date('m月j日',strtotime($request->target_date));
         }
@@ -70,7 +69,7 @@ class WorkScheduleController extends Controller
         //user_idの重複をのぞくtarget_dateの一番大きい値の検索
         $uniqueday = DB::table('works')
         ->select(DB::raw('user_id, max(target_date) as max_target_date'))
-        ->whereDate('target_date', $sample)
+        ->whereDate('target_date', $target_date)
         ->groupBy('user_id')
         ->get();
         
@@ -92,10 +91,7 @@ class WorkScheduleController extends Controller
             $a->username = $this->getUserName($a->user_id);
         }
         
-        
         $work = Work::all();
-        
-        
         
         return view('users.work_schedule.whole', ['date' => $date , 'work' => $work , 'result' => $result]);
     }
@@ -174,7 +170,7 @@ class WorkScheduleController extends Controller
             // 1日の場合
             if ($i == 1) {
                 
-                // 1日目の��日までをループ
+                // 1日目の週末日までをループ
                 for ($s = 1; $s <= $week; $s++) {
                     
                     // 前半に空文字をセット
@@ -205,7 +201,7 @@ class WorkScheduleController extends Controller
     public function getCalendarDates($year, $month)
     {
         $dateStr = sprintf('%04d-%02d-01', $year, $month);
-         
+        
         $date = new Carbon($dateStr);
         
         // カレンダーを四角形にするため、前月となる左上の隙間用のデータを入れるためずらす
@@ -228,13 +224,13 @@ class WorkScheduleController extends Controller
         $work = new Work;
         
         //updateのなかの連想配列をif文の中で分岐させる
-        //からの配列を忘れずに
-        $test = array();
+        //空の配列を忘れずに
+        $update = array();
         
         if(isset($request['attendance'])) {
-            $test = ['attendance' => $work->attendance = date("H:i:s")];
+            $update = ['attendance' => $work->attendance = date("H:i:s")];
         }elseif(isset($request['leaving'])) {
-            $test = [
+            $update = [
             'leaving' => $work->leaving = date("H:i:s"),
             'leaving_date' => $work->leaving_date = date("Y-m-d"),
             ];
@@ -242,7 +238,7 @@ class WorkScheduleController extends Controller
         
         DB::table('works')
         ->where('id', $request->id)
-        ->update($test);
+        ->update($update);
         
         return $this->add();
     }

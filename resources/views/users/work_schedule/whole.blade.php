@@ -3,24 +3,18 @@
 @section('content')
 <body>
     <div>
-        
         <div class="width">
             <h1>全体の勤務表</h1>
             <h2>{{ $date }}</h2>
             <form action="{{ action('Users\WorkScheduleController@whole') }}" method="get">
                 <input type="date" name="target_date" value="target_date"/>
-                
-                
                 <input type="submit" value="送信"/>
-                
                 {{ csrf_field() }}
             </form>
-            
             <div>
                 <div>
                     <table>
                         <thead>
-                            
                             <tr>
                                 <th>状態</th>
                                 <th>名前</th>
@@ -30,10 +24,8 @@
                                 <th>退勤</th>
                             </tr>
                         </thead>
-                        
                         <tbody>
                             @foreach($result as $status)
-                            
                             <tr>
                                 @if($status->attendance != '00:00:00' && $status->leaving == '00:00:00')
                                     <td>勤務中</td>
@@ -59,7 +51,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
                 </div>
             </div>
         </div>

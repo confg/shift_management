@@ -6,7 +6,6 @@
     <div class="width">
         <h1>勤務表の登録</h1>
         <div class="content">
-            
             <div class="content-left">
                 
                 <table class="table">
@@ -31,15 +30,12 @@
                             </form>
                         </td>
                     </tr>
-                    
                     <form action="{{ action('Users\WorkScheduleController@update') }}" method="post">
                         <tr>
-                            
                             <td>
                                 <h5>出勤予定時間</h5>
                                 <input style="width:120px;height:35px" class="form-control{{ $errors->has('endtime') ? ' is-invalid' : '' }}" type="time" min="0:00" max="23:59" required name="starttime" value="{{ $work->starttime }}">
                             </td>
-                            
                             <td>
                                 <h5>退勤予定時間</h5>
                                 <div class="contents">
@@ -51,7 +47,6 @@
                                 </div>
                             </td>
                         </tr>
-                       
                         <tr>
                             @if($work->starttime == null )
                                 <td>
@@ -66,7 +61,6 @@
                                 @endif
                             @endif
                         </tr>
-                        
                         @if ( $work != null )
                             <input type="hidden" name="id" value="{{ $work->id }}">
                         @else
@@ -91,7 +85,6 @@
                     <tr>
                         <td>
                             <h2>{{ $selectMonth.'月'.$selectDay.'日の予定' }}</h2>
-                           
                         </td>
                     </tr>
                     <tr>
@@ -114,7 +107,6 @@
                     </tr>
                 </table>
                 <table class="table">
-                    
                     <tr>
                         <td>
                             <h2>出勤時刻</h2>
@@ -145,10 +137,8 @@
                         </td>    
                     </tr>
                 </table>
-                
             </div>
         </div>    
     </div>
-    
 </body>
 @endsection

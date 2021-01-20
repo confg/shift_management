@@ -16,7 +16,6 @@
                     </div>
                 @endif
                 <form action="{{ action('Users\BbsController@create') }}" method="post" enctype="multipart/form-data">
-                    
                     <div class="form-group row">
                         <label class="col-md-2">タイトル</label>
                         <div class="col-md-10">

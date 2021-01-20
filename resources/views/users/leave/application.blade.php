@@ -15,7 +15,6 @@
                             <h4>{{ $user }}</h4>
                         </div>
                     </div>
-                    
                     <div class="contens">
                         <h4 class="plan-contents" for="suggested_time">希望日付</h4>
                         <div>
@@ -31,13 +30,11 @@
                             </div>
                         @endif
                     </div>
-                    
                     <div  class="plan-contents">
                         @foreach($all as $alls)
                         <input name="leave_reason_master_id" type="radio" value="{{ $alls->id }}" required/>{{ $alls->reason_name }}
                         @endforeach
                     </div>
-                    
                     <div class="plan-contents">
                         <h4>備考・理由</h4>
                         <textarea class="text" maxlength='50' rows="3" name="text"></textarea>
