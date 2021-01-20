@@ -72,13 +72,10 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            
-
             <div class="content">
                 <div class="title m-b-md">
                     勤怠管理アプリ
                 </div>
-                
                 @if (Route::has('login'))
                     <div class="flex-center">
                         <a class="block" href="{{ url('/login') }}">ログイン</a>
