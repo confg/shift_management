@@ -35,14 +35,14 @@
                 @endcan
             </div>
             
-            <div class="content-right">
+            <div>
                 <h3>プロフィール</h3>
                 <table>
                     <tr>
                         <th>名前</th><td>{{ $user->name }}</td>
                     </tr>
                     <tr>
-                        <th>メールアドレス</th><td  style="width:400px">{{ $user->email }}</td>
+                        <th style="width:50px">メールアドレス</th><td style="width:400px">{{ $user->email }}</td>
                     </tr>
                 </table>
             </div>
