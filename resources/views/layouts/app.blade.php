@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/my.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="app">
