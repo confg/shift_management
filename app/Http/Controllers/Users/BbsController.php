@@ -79,11 +79,8 @@ class BbsController extends Controller
     }
     
     if($cond_name != '') {
-      //Userクラスの名前取得
       $users = User::where('name','like','%'.$cond_name.'%')->get();
-      //対象のプロパティだけのid抽出してるところ
       $ids = $users->pluck('id');
-      
       $index->whereIn('user_id', $ids);
     }
     

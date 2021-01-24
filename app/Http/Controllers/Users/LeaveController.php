@@ -33,7 +33,6 @@ class LeaveController extends Controller
         $update = $request->date;
         $form = $request->all();
         
-        //ログインユーザーの希望日付のリクエストのID
         $target = DB::table('leaves')
         ->where('date',$update)
         ->where('user_id',Auth::id())
@@ -67,6 +66,7 @@ class LeaveController extends Controller
         $application_date = $request->application_date;
         $leave_reason_master_id = $request->leave_reason_master_id;
         $cond_name = $request->cond_name;
+        
         $leave_type = LeaveReasonMaster::all();
         
         $leave = Leave::orderBy('created_at', 'desc');
@@ -108,11 +108,8 @@ class LeaveController extends Controller
         
         $users = User::where('name','like','%'.$cond_name.'%')->first();
         if($cond_name != '') {
-          //USERクラスの名前取得
           $users = User::where('name','like','%'.$cond_name.'%')->get();
-          //対象のプロパティだけのid抽出してるところ
           $ids = $users->pluck('id');
-          
           $leave->whereIn('user_id', $ids);
         }
         
@@ -170,11 +167,8 @@ class LeaveController extends Controller
         
         $manage = Leave::find($request->id);
         
-        //なんの型なのかわかるように
         $permitFlg = false;
         
-        //ボタンからきたリクエストをデータベースに入る形に変える
-        //permitのblockingはfront.bladeファイルのname属性
         if(isset($request['permit'])) {
             $permitFlg = true;
         }elseif(isset($request['blocking'])) {
