@@ -18,6 +18,16 @@ class CreateLeaveReasonMastersTable extends Migration
             $table->string('reason_name');
             
         });
+        
+        DB::table('leave_reason_masters')->insert([
+            ['id' => '1'],
+            ['reason_name' => '有給'],
+        ]);
+        
+        DB::table('leave_reason_masters')->insert([
+            ['id' => '2'],
+            ['reason_name' => 'その他'],
+        ]);
     }
 
     /**
