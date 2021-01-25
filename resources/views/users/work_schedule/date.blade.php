@@ -16,7 +16,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <form action="{{ action('Users\WorkScheduleController@attendance', [ 'id' => $work ]) }}" method="post">
+                            <form action="{{ action('Users\WorkScheduleController@attendance', [ 'id' => $work->id ]) }}" method="post">
                                 {{ csrf_field() }}
                                 @if(date("Y-n-j") == $date && $work->leaving == '00:00:00')
                                     @if($work->attendance == '00:00:00')
