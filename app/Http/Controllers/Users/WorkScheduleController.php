@@ -196,14 +196,14 @@ class WorkScheduleController extends Controller
         $update = array();
         
         if(isset($request['attendance'])) {
-            $update = ['attendance' => $work->attendance = date('H:i:s')];
+            $update = ['attendance' => $work->attendance = date("H:i:s")];
         }elseif(isset($request['leaving'])) {
             $update = [
-            'leaving' => $work->leaving = date('H:i:s'),
+            'leaving' => $work->leaving = date("H:i:s"),
             'leaving_date' => $work->leaving_date = date("Y-m-d"),
             ];
         }
-        //dd($update);
+        dd($update);
         
         DB::table('works')
         ->where('id', $request->id)
