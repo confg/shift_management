@@ -203,7 +203,7 @@ class WorkScheduleController extends Controller
             'leaving_date' => $work->leaving_date = date("Y-m-d"),
             ];
         }
-        dd($update);
+        //dd($update);
         
         DB::table('works')
         ->where('id', $request->id)
