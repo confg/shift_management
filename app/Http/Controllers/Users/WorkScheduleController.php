@@ -195,6 +195,7 @@ class WorkScheduleController extends Controller
         $work = new Work;
         $update = array();
         
+        
         if(isset($request['attendance'])) {
             $update = ['attendance' => $work->attendance = date("H:i:s")];
         }elseif(isset($request['leaving'])) {
@@ -203,11 +204,14 @@ class WorkScheduleController extends Controller
             'leaving_date' => $work->leaving_date = date("Y-m-d"),
             ];
         }
-        dd($update);
-        
+        //dd($update);
+        /*
         DB::table('works')
         ->where('id', $request->id)
         ->update($update);
+        */
+        $work = Work::find($request->id);
+        $work->fill($update)->save();
         
         return $this->add();
     }
