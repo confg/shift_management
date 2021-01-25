@@ -211,9 +211,13 @@ class WorkScheduleController extends Controller
         ->update($update);
         */
         $work = Work::find($request->id);
-        $work->fill($update)->save();
+        //$work->fill($update)->save();
+        $work->attendance = "15:35:00";
+        $work->save();
         
-        return $this->add();
+        return redirect('work_schedule/my');
+        
+        //$this->add();
     }
     
 }
