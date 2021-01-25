@@ -205,19 +205,19 @@ class WorkScheduleController extends Controller
             ];
         }
         //dd($update);
-        /*
+        
         DB::table('works')
         ->where('id', $request->id)
         ->update($update);
-        */
+        
+        /*
         $work = Work::find($request->id);
         //$work->fill($update)->save();
         $work->attendance = "15:35:00";
         $work->save();
+        */
         
         return redirect('users/work_schedule/my');
-        
-        //$this->add();
     }
     
 }
