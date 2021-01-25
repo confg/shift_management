@@ -215,7 +215,7 @@ class WorkScheduleController extends Controller
         $work->attendance = "15:35:00";
         $work->save();
         
-        return redirect('work_schedule/my');
+        return redirect('users/work_schedule/my');
         
         //$this->add();
     }
